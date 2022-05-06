@@ -1,0 +1,25 @@
+{
+  "errno": 0,
+  "data": [
+    {
+      "k": "呼叫",
+      "v": "call out; shout; [讯]call; ring; page"
+    },
+    {
+      "k": "呼叫铃",
+      "v": "call bell"
+    },
+    {
+      "k": "呼叫中心",
+      "v": "[通信]call center; [通信]一种基于计算机电话集成(CTI)技术、与企业连为一体的一个"
+    },
+    {
+      "k": "呼叫等待",
+      "v": "calls waiting"
+    },
+    {
+      "k": "呼叫转移",
+      "v": "call forwardingcall divert"
+    }
+  ]
+}
