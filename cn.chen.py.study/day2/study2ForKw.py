@@ -11,7 +11,8 @@ if __name__ == '__main__':
     }
 
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36'}
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+                      ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36'}
     response = requests.get(url=url, headers=headers, params=param, verify=False, timeout=4)
     page_text = response.text
     print(page_text)
