@@ -5,43 +5,81 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36'}
 
 if __name__ == '__main__':
-    kw = input('请输入要查询的手机号码:')
+    domain = 'http://s11.cscmjc.com'
+
+    mobileList = ["16521289172", "16521289173", "16521289174", "16521289175", "16521289176", "16521289178",
+                  "16521289179", "16521289181", "16521289182", "16521289183", "16521289184", "16521289185",
+                  "16521289186", "16521289187", "16521289189", "16521289190", "16521289192", "16521289193",
+                  "16521289194", "16521289195", "16521289196", "16521289197", "16521289198", "16521289201",
+                  "16521289202", "16521289203", "16521289204", "16521289205", "16521289206", "16521289207",
+                  "16521289208", "16521289209", "16521289212", "16521289213", "16521289214", "16521289215",
+                  "16521289216", "16521289217", "16521289218", "16521289219", "16521289220", "16521289221",
+                  "16521289223", "16521289224", "16521289225", "16521289226", "16521289227", "16521289228",
+                  "16521289229", "16521289230", "16521289231", "16521289232", "16521289235", "16521289236",
+                  "16521289237", "16521289238", "16521289239", "16521289240", "16521289241", "16521289242",
+                  "16521289243", "16521289245", "16521289246", "16521289247", "16521289248", "16521289249",
+                  "16521289250", "16521289251", "16521289253", "16521289254", "16521289256", "16521289257",
+                  "16521289258", "16521289264", "16521289265", "16521289267", "16521289268", "16521289269",
+                  "16521289270", "16521289271", "16521289272", "16521289273", "16521289274", "16521289275",
+                  "16521289276", "16521289278", "16521289279", "16521289280", "16521289281", "16521289282",
+                  "16521289283", "16521289284", "16521289285", "16521289286", "16521289287", "16521289290",
+                  "16521289291", "16521289293", "16521289294", "16521289296", "16521289297", "16521289298",
+                  "16521289337", "16521289338", "16521289340", "16521289341", "16521289342", "16521289343",
+                  "16521289346", "16521289347", "16521289348", "16521289349", "16521289350", "16521289351",
+                  "16521289352", "16521289353", "16521289354", "16521289356", "16521289357", "16521289358",
+                  "16521289359", "16521289360", "16521289361", "16521289362", "16521289363", "16521289364",
+                  "16521289365", "16521289367", "16521289368", "16521289369", "16521289370", "16521289371",
+                  "16521289372", "16521289373", "16521289374", "16521289375", "16521289376", "16521289378",
+                  "16521289379", "16521289380", "16521289381", "16521289382", "16521289383", "16521289384",
+                  "16521289385", "16521289386", "16521289387", "16521289389", "16521289390", "16521289391",
+                  "16521289392", "16521289394", "16521289395", "16521289396", "16521289397", "16521289398",
+                  "16521289401", "16521289402", "16521289403", "16521289404", "16521289405", "16521289406",
+                  "16521289407", "16521289408", "16521289409", "16521289410", "16521289412", "16521289413",
+                  "16521289414", "16521289415", "16521289416", "16521289417", "16521289418", "16521289419",
+                  "16521289420", "16521289421", "16521289423", "16521289424", "16521289425", "16521289426",
+                  "16521289427", "16521289428", "16521289429", "16521289430", "16521289431", "16521289434",
+                  "16521289435", "16521289436", "16521289437", "16521289438", "16521289439", "16521289440",
+                  "16521289441", "16521289442", "16521289443", "16521289445", "16521289446", "16521289447",
+                  "16521289448", "16521289449", "16521289450", "16521289451"
+                  ]
+
+for mobile in mobileList:
 
     param = {
-        'q': kw
+        'q': mobile
     }
 
-    sou_SoGou = 'http://s1.cscmjc.com/api/wap/sogouwap.php'
+    sou_SoGou = domain + '/api/wap/sogouwap.php'
 
-    sou_360 = 'http://s1.cscmjc.com/api/wap/souswap360.php'
-    sou_Slb = 'http://s2.cscmjc.com/api/pc/souslb.php'
-    sou_baidu = 'http://s2.cscmjc.com/api/pc/sousbaidu.php'
-    sou_dianHuaBang = 'http://s2.cscmjc.com/api/pc/phonenumber.php'
-    sou_114 = 'http://s2.cscmjc.com/api/pc/114best.php'
-    sou_7 = 'http://s2.cscmjc.com/api/pc/sous_7.php'
-    sou_8 = 'http://s2.cscmjc.com/api/pc/sous_8.php'
-    sou_9 = 'http://s2.cscmjc.com/api/pc/sous_9.php'
-    sou_10 = 'http://s2.cscmjc.com/api/pc/sous_10.php'
-    sou_11 = 'http://s2.cscmjc.com/api/pc/sous_11.php'
-    sou_12 = 'http://s2.cscmjc.com/api/pc/sous_12.php'
-    sou_13 = 'http://s2.cscmjc.com/api/pc/sous_13.php'
-    sou_14 = 'http://s2.cscmjc.com/api/pc/sous_14.php'
-    sou_15 = 'http://s2.cscmjc.com/api/pc/sous_15.php'
-    sou_16 = 'http://s2.cscmjc.com/api/pc/sous_16.php'
-
-    saoRao_imgUrl = 'https://www.guishudi.com/dhpic/0F82FA1D942FBCCA2F.gif'
+    sou_360 = domain + '/api/wap/souswap360.php'
+    sou_Slb = domain + '/api/pc/souslb.php'
+    sou_baidu = domain + '/api/pc/sousbaidu.php'
+    sou_dianHuaBang = domain + '/api/pc/phonenumber.php'
+    sou_114 = domain + '/api/pc/114best.php'
+    sou_7 = domain + '/api/pc/sous_7.php'
+    sou_8 = domain + '/api/pc/sous_8.php'
+    sou_9 = domain + '/api/pc/sous_9.php'
+    sou_10 = domain + '/api/pc/sous_10.php'
+    sou_11 = domain + '/api/pc/sous_11.php'
+    sou_12 = domain + '/api/pc/sous_12.php'
+    sou_13 = domain + '/api/pc/sous_13.php'
+    sou_14 = domain + '/api/pc/sous_14.php'
+    sou_15 = domain + '/api/pc/sous_15.php'
+    sou_16 = domain + '/api/pc/sous_16.php'
 
     urlList = [sou_SoGou, sou_360, sou_Slb, sou_baidu, sou_dianHuaBang, sou_114, sou_7, sou_8, sou_9, sou_10, sou_11,
                sou_12, sou_13, sou_14, sou_15, sou_16]
     # urlList = [sou_114]
-    key = kw + '\n'
+    key = ''
+    count = 0
+    j = 0
     for url in urlList:
         mark = '标记平台：{},标记内容：{}\n'
         try:
             response = requests.get(url=url, params=param, headers=headers, timeout=4)
             page_text = response.text
             tree = etree.HTML(page_text)
-            markStatusList = tree.xpath("//tr/td/text()")
+            markStatusList = tree.xpath("//tr/td[2]/text()")
             i = 0
             for markStatus in markStatusList:
                 if markStatus == '标记未知':
@@ -50,6 +88,17 @@ if __name__ == '__main__':
                 markContent = tree.xpath("//tr/td[2]/text()")[i]
                 key += mark.format(markPlatform, markContent)
                 i = i + 1
+                count = count + 1
         except Exception as e:
             print(e)
+    print(mobile)
+    print(count)
     print(key)
+    s = mobile + '\n' + str(count) + '\n' + key
+    j = j + 1
+    print(j)
+    if count > 0:
+        with open('programming.txt', 'a') as fp:
+            fp.write(s)
+
+print('爬取完成')
