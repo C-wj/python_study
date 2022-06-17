@@ -10,42 +10,47 @@ agents = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36',
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.47']
 
+proxy_url = 'http://13113683386.user.xiecaiyun.com/api/proxies?action=getText&key=NPF3452976&count=1&word=&rand=true&norepeat=false&detail=false&ltime=0'
+proxy_url_company = 'http://192.168.1.3:8082'
+
 
 def gethtml(url, param, headers, proxies):
     i = 0
     while i < 3:
         try:
-            response = requests.get(url=url, params=param, headers=headers, proxies=proxies, timeout=10)
+            response = requests.get(url=url, params=param, headers=headers, proxies=proxies, timeout=10, verify=False)
             return response.text
         except requests.exceptions.RequestException as e:
             print(e)
             i += 1
             # 内网代理 http://192.168.1.3:8082
-            res = requests.get(
-                'http://13113683386.user.xiecaiyun.com/api/proxies?action=getText&key=NPF3452976&count=1&word=&rand=true&norepeat=false&detail=false&ltime=0')
-            proxy = f'http://{res.text}'.replace('\n', '')
-            proxies = {
-                'http': proxy
-            }
+            proxies = getProxies(proxy_url_company)
+
+
+def getProxies(requestUrl):
+    # response = requests.get(requestUrl)
+    # address = f'http://{response.text}'.replace('\n', '')
+    return {'http': 'http://192.168.1.3:8082',
+            'https': 'https://192.168.1.3:8082'}
 
 
 if __name__ == '__main__':
 
     url = 'https://www.so.com/s'
 
-    mobileList = []
-
-    url_ip = 'http://121.4.186.148:5555/get'
-    # ip_list = get_ip_list(url_ip, headers)
+    mobileList = [
+        '16521289451', '16521292935', '16521292939', '16521292942', '16521292943', '16521292945',
+        '16521292946', '16521292947', '16521292948', '16521292949', '16521292950', '16521292951',
+        '16521292952', '16521292954', '16521292957', '16521292959', '16521292961', '16521292964',
+        '16521292965', '16521292967', '16521292971', '16521292972', '16521292973', '16521292974',
+        '16521292975', '16521292978', '16521292982', '16521292984', '16521292989', '16521292990',
+        '16521292994', '16521292995', '16521293002', '16521293019', '16521293021', '16521293024',
+        '16521293026', '16521293029', '16521293032', '16521293034', '16521293035', '16521293040',
+        '16521293041']
 
     i = 0
     for mobile in mobileList:
-        res = requests.get(
-            'http://13113683386.user.xiecaiyun.com/api/proxies?action=getText&key=NPF3452976&count=1&word=&rand=true&norepeat=false&detail=false&ltime=0')
-        proxy = f'http://{res.text}'.replace('\n', '').replace('\r', '')
-        proxies = {
-            'http': proxy
-        }
+        proxies = getProxies(proxy_url_company)
         headers = {
             'User-Agent': random.choice(agents),
             'X-Requested-With': 'XMLHttpRequest'
@@ -53,10 +58,8 @@ if __name__ == '__main__':
         param = {
             'q': mobile,
             'src': 'srp',
-            # 'ssid': 'b2a75f210b0a4785bd370a782be95901',
             'fr': 'none',
             'psid': '32e43664e937f38eb9f1cf8f037a62a7'
-            # "nlpv": "test_bt_15"
         }
         page_text = gethtml(url, param, headers, proxies)
         with open('./369.html', 'w', encoding='utf-8') as fp:
