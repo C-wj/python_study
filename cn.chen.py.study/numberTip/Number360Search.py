@@ -23,15 +23,17 @@ def gethtml(url, param, headers, proxies):
         except requests.exceptions.RequestException as e:
             print(e)
             i += 1
-            # 内网代理 http://192.168.1.3:8082
-            proxies = getProxies(proxy_url_company)
+            proxies = getInnerProxy()
 
+
+def getInnerProxy():
+    return {'http': proxy_url_company,
+             'https': proxy_url_company}
 
 def getProxies(requestUrl):
-    # response = requests.get(requestUrl)
-    # address = f'http://{response.text}'.replace('\n', '')
-    return {'http': 'http://192.168.1.3:8082',
-            'https': 'https://192.168.1.3:8082'}
+    response = requests.get(requestUrl)
+    proxy = f'http://{response.text}'.replace('\n', '')
+    return proxy
 
 
 if __name__ == '__main__':
@@ -50,7 +52,7 @@ if __name__ == '__main__':
 
     i = 0
     for mobile in mobileList:
-        proxies = getProxies(proxy_url_company)
+        proxies = getInnerProxy()
         headers = {
             'User-Agent': random.choice(agents),
             'X-Requested-With': 'XMLHttpRequest'
