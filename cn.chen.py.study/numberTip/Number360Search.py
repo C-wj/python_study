@@ -28,7 +28,8 @@ def gethtml(url, param, headers, proxies):
 
 def getInnerProxy():
     return {'http': proxy_url_company,
-             'https': proxy_url_company}
+            'https': proxy_url_company}
+
 
 def getProxies(requestUrl):
     response = requests.get(requestUrl)
