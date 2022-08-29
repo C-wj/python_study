@@ -170,7 +170,7 @@ if __name__ == '__main__':
         holdUrl = holdDataResultJson.get('url')
         holdBase = holdDataResultJson.get('base')
 
-        # OCR识别 啊是撒是
+        # OCR识别
         faceOCR = getOCR(faceBase)
 
     # 上传图片
