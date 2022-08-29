@@ -2,8 +2,6 @@ import asyncio
 from time import sleep
 
 import httpx
-from httpx import AsyncClient
-from loguru import logger
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
@@ -16,10 +14,11 @@ home_url = 'https://crm.10039.cc/crm/manager/login/login.jsp'
 yzm_url = 'https://crm.10039.cc/crm/validateCode'
 login_url = 'https://crm.10039.cc/crm/loginController/login'
 upload_url = 'https://crm.10039.cc/crm/uploadImgController/upload'
-
+getRoutDeparts_url = '/crm/loginController/getRoutDeparts'
 
 class Crm:
     def __int__(self):
+        self.base_url = 'https://crm.10039.cc'
         self.headers = {
             'Host': 'crm.10039.cc',
             'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
@@ -33,15 +32,19 @@ class Crm:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
         }
         self.client = self.getClient()
+        self.base_cookie = 'login_sms_zhangwenrui=1;95fa6890880a433a8094107a65abbb23=WyIzNDE2NDM5NjQ4Il0'
 
     def getClient(self):
-        return AsyncClient()
+        client = httpx.Client(base_url=self.base_url, headers=self.headers)
+        return client
 
+    def getRout(self, data):
+        # 获取渠道
+        routDeparts = self.client.post(getRoutDeparts_url, data=data, headers=self.headers)
+        return routDeparts.json()
 
-    async def run(self):
-        logger.info('启动')
-        uploadR = await self.client.post("https://voice.szshanyun.com//voice-manage/sys_files", headers=self.headers)
-        print(uploadR)
+    def setCookie(self, cookie):
+        self.headers.update(cookie)
 
 
 def getLoginCookie():
