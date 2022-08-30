@@ -31,6 +31,10 @@ updateRoutDeparts_url = '/crm/loginController/updateRoutDeparts'
 checkCust_url = '/crm/VCommonController/checkCust'
 qryAllUserInfo_url = '/crm/VCommonController/qryAllUserInfo'
 getOCR_url = '/crm/uploadImgController/getOCR'
+createCustomer_url = '/crm/dialog/createCustomer'
+checkPreAccount_url = '/crm/creatCustController/checkPreAccount'
+redisAddAstrict_url = '/crm/creatCustController/redisAddAstrict'
+submitdevelop_url = '/crm/dialog/submitdevelop'
 
 
 def getLoginCookie():
@@ -85,10 +89,101 @@ def getOCR(imageBase):
     return ocrResult.json()
 
 
+def createCustomer(client, fileId, base64Str, faceUrl, backUrl, holdUrl, faceOcr, provinceCode, regionCode):
+    words = faceOcr.get('words')
+    address = words.get('address')
+    birthday = words.get('birthday')
+    idcard = words.get('idcard')
+    name = words.get('name')
+    nationality = words.get('nationality')
+    sex = words.get('sex')
+    if sex == '女':
+        sex = 'W'
+    else:
+        sex = 'M'
+
+    createCustomerData = {'fileId': fileId,
+                          'assureFileId': '',
+                          'base64Str': base64Str,
+                          'studentFileId': '',
+                          'isReadCard': '1',
+                          'pic': faceUrl,
+                          'pic': backUrl,
+                          'pic': holdUrl,
+                          'custName': name,
+                          'provinceCode': provinceCode,
+                          'regionCode': regionCode,
+                          'custType': '0',
+                          'birthday': birthday,
+                          'birthdayUnchange': '',
+                          'sex': sex,
+                          'sexUnchange': '',
+                          'groupCode': '',
+                          'custLevel': '0',
+                          'psptTypeCode': '1',
+                          'psptId': idcard,
+                          'psptAddr': address,
+                          'phone': '',
+                          'assureName': '',
+                          'provinceCode': '',
+                          'regionCode': '',
+                          'assurePsptTypeCode': '1',
+                          'assurePsptTypeCodeName': '身份证',
+                          'assurePsptId': '',
+                          'assureSerialNumber': '',
+                          'pic': '',
+                          'pic': '',
+                          'pic': '',
+                          'isClkMore': '0',
+                          'contactName': '',
+                          'contactPhone': '',
+                          'headTag': '1',
+                          'postCode': '',
+                          'postPerson': '',
+                          'postAddress': '',
+                          'email': '',
+                          'faxNbr': '',
+                          'homeAddress': '',
+                          'homePhone': '',
+                          'pic': '',
+                          'studentName': '',
+                          'studentAge': '',
+                          'schoolName': '',
+                          'studentPsptId': ''
+                          }
+    createCustomerResult = client.post(url=createCustomer_url, data=createCustomerData, headers=login_headers,
+                                       follow_redirects=False)
+    print(createCustomerResult)
+    print(createCustomerResult.json())
+    return createCustomerResult.json().get('rows')[0]
+
+
+def checkPreAccount(client, faceOcr, serialNumber):
+    words = faceOcr.get('words')
+    idcard = words.get('idcard')
+    checkPreAccountData = {'psptId': idcard,
+                           'serialNumber': serialNumber}
+    checkPreAccountResult = client.post(url=checkPreAccount_url, data=checkPreAccountData, headers=login_headers,
+                                        follow_redirects=False)
+    print(checkPreAccountResult)
+    print(checkPreAccountResult.json())
+
+
+def redisAddAstrict(client, faceOcr, serialNumber):
+    words = faceOcr.get('words')
+    idcard = words.get('idcard')
+    redisAddAstrictData = {'psptId': idcard,
+                           'serialNumber': serialNumber}
+    redisAddAstrictResult = client.post(url=redisAddAstrict_url, data=redisAddAstrictData, headers=login_headers,
+                                        follow_redirects=False)
+    print(redisAddAstrictResult)
+    print(redisAddAstrictResult.json())
+
+
 if __name__ == '__main__':
     # 获取登录cookie
     # login_cookie = getLoginCookie()
-    login_cookie = 'SESSION=' + '602d95bf-e14b-4c69-a81e-2f3c3a7abda7' + ";" + base_cookie
+    login_cookie = 'SESSION=' + '7d06f28e-3ddc-4f2d-bc7f-a7ee4b7a6e96' + ";" + base_cookie
 
     headers['Cookie'] = login_cookie
 
@@ -96,49 +191,49 @@ if __name__ == '__main__':
     print(login_headers)
 
     with httpx.Client(base_url=base_url) as client:
-        # # 获取渠道
-        # data = {"departNameFilter": "上海", "sort": "province_code", "order": "asc"}
-        # routR = client.post(url=getRoutDeparts_url, data=data, headers=login_headers,
-        #                     follow_redirects=False)
-        #
-        # print(routR.json())
-        # routJson = routR.json()[0]
-        # provinceCode = routJson.get('province_code')
-        # regionCode = routJson.get('regin_code')
-        #
-        # # 更新渠道
-        # data = {'departName_nav': routJson.get('departName'),
-        #         'regin_code_nav': regionCode,
-        #         'province_code_nav': provinceCode,
-        #         'regin_encode_nav': routJson.get('reginEncode'),
-        #         'province_encode_nav': routJson.get('provinceEncode'),
-        #         'departId_nav': routJson.get('departId')
-        #         }
-        #
-        # updateRoutDeparts = client.post(url=updateRoutDeparts_url, data=data, headers=login_headers,
-        #                                 follow_redirects=False)
-        # print(updateRoutDeparts.json())
-        # routJson = updateRoutDeparts.json()
-        #
-        # # 查询产品信息
-        # checkCustSearchParam = {"provinceCode": provinceCode,
-        #                         "regionCode": regionCode,
-        #                         "qryMode": "0",
-        #                         "serialNumber": serialNumber,
-        #                         "queryType": "null",
-        #                         "tradeTypeCode": "90"}
-        # checkCustSearchParams = {'param': checkCustSearchParam}
-        #
-        # checkCustSearch = client.post(url=checkCust_url, params=checkCustSearchParams, headers=login_headers,
-        #                               follow_redirects=False)
-        #
-        # print(checkCustSearch.json())
-        #
-        # # qryAllUserInfo
-        # qryAllUserInfoData = {'serialNumber': serialNumber, 'tradeTypeCode': tradeTypeCode}
-        # qryAllUserInfoResult = client.post(url=qryAllUserInfo_url, data=qryAllUserInfoData, headers=login_headers,
-        #                                    follow_redirects=False)
-        # print(qryAllUserInfoResult.json())
+        # 获取渠道
+        data = {"departNameFilter": "上海", "sort": "province_code", "order": "asc"}
+        routR = client.post(url=getRoutDeparts_url, data=data, headers=login_headers,
+                            follow_redirects=False)
+
+        print(routR.json())
+        routJson = routR.json()[0]
+        provinceCode = routJson.get('province_code')
+        regionCode = routJson.get('regin_code')
+
+        # 更新渠道
+        data = {'departName_nav': routJson.get('departName'),
+                'regin_code_nav': regionCode,
+                'province_code_nav': provinceCode,
+                'regin_encode_nav': routJson.get('reginEncode'),
+                'province_encode_nav': routJson.get('provinceEncode'),
+                'departId_nav': routJson.get('departId')
+                }
+
+        updateRoutDeparts = client.post(url=updateRoutDeparts_url, data=data, headers=login_headers,
+                                        follow_redirects=False)
+        print(updateRoutDeparts.json())
+        routJson = updateRoutDeparts.json()
+
+        # 查询产品信息
+        checkCustSearchParam = {"provinceCode": provinceCode,
+                                "regionCode": regionCode,
+                                "qryMode": "0",
+                                "serialNumber": serialNumber,
+                                "queryType": "null",
+                                "tradeTypeCode": "90"}
+        checkCustSearchParams = {'param': checkCustSearchParam}
+
+        checkCustSearch = client.post(url=checkCust_url, params=checkCustSearchParams, headers=login_headers,
+                                      follow_redirects=False)
+
+        print(checkCustSearch.json())
+
+        # qryAllUserInfo
+        qryAllUserInfoData = {'serialNumber': serialNumber, 'tradeTypeCode': tradeTypeCode}
+        qryAllUserInfoResult = client.post(url=qryAllUserInfo_url, data=qryAllUserInfoData, headers=login_headers,
+                                           follow_redirects=False)
+        print(qryAllUserInfoResult.json())
 
         # type  0 正面  1 背面  2 手持
         # 上传正面 后得到 {"fileName":"202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","error":0,"url":"https://readimage.10039.cc/202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","fileId":4027973,"base":1212}
@@ -173,16 +268,10 @@ if __name__ == '__main__':
         # OCR识别
         faceOCR = getOCR(faceBase)
 
-    # 上传图片
-    # imagePath = './正面.jpg'
-    #
-    # files = {'uploadFile': ('正面.jpg', open(imagePath, 'rb'), 'image/jpeg')}
-    # uploadR = client.post(upload_url + '?dir=image', headers=login_headers, files=files)
-    # print(uploadR)
-    # print(uploadR.text)
-    # login_headers['Content-Type'] = 'application/x-www-form-urlencoded'
-    # data = {"departNameFilter": "深圳", "sort": "province_code", "order": "asc"}
-    # routR = client.post("https://crm.10039.cc/crm/loginController/getRoutDeparts", data=data, headers=login_headers,
-    #                     follow_redirects=False)
-    # print(routR)
-    # print(routR.json())
+        # createCustomer
+        createCustomerJson = createCustomer(client, fileId, faceBase, faceUrl, backUrl, holdUrl, faceOCR.json(),
+                                            provinceCode, regionCode)
+
+        # checkPreAccount
+        checkPreAccount(client, faceOCR.json(), serialNumber)
+        redisAddAstrict(client, faceOCR.json(), serialNumber)
