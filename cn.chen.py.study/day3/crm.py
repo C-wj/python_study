@@ -35,6 +35,11 @@ createCustomer_url = '/crm/dialog/createCustomer'
 checkPreAccount_url = '/crm/creatCustController/checkPreAccount'
 redisAddAstrict_url = '/crm/creatCustController/redisAddAstrict'
 submitdevelop_url = '/crm/dialog/submitdevelop'
+# 获取订单打印的html
+costInfo_url = '/crm/creatCustController/costInfo'
+queryCostList_url = '/crm/dialog/queryCostList'
+getDataDate_url = '/crm/creatCustController/getDataDate'
+submitOrderInfo_url = '/crm/VCommonController/submitOrderInfo'
 
 
 def getLoginCookie():
@@ -180,98 +185,129 @@ def redisAddAstrict(client, faceOcr, serialNumber):
     print(redisAddAstrictResult.json())
 
 
-if __name__ == '__main__':
-    # 获取登录cookie
-    # login_cookie = getLoginCookie()
-    login_cookie = 'SESSION=' + '7d06f28e-3ddc-4f2d-bc7f-a7ee4b7a6e96' + ";" + base_cookie
+def submitdevelop(client, createCustomerJson, fileId, faceOcr, departName, departId):
+    words = faceOcr.get('words')
+    idcard = words.get('idcard')
+    name = words.get('name')
+    submitdevelopParams = {
+        'custInfoData': createCustomerJson,
+        'fileId': fileId,
+        'newCustId': -1,
+        'psptId': idcard
+    }
+    submitdevelopData = {
+        'custId': -1,
+        'custNamehidden': name,
+        'assurePsptTypeCode': 1,
+        'assurePsptTypeCodeName': '身份证',
+        'brandCode': '',
+        'packageKindCode': '',
+        'developmentName': '',
+        'developStaffId': '',
+        'department': departName,
+        'developDepartId': departId
+    }
 
-    headers['Cookie'] = login_cookie
-
-    login_headers = headers
-    print(login_headers)
-
-    with httpx.Client(base_url=base_url) as client:
-        # 获取渠道
-        data = {"departNameFilter": "上海", "sort": "province_code", "order": "asc"}
-        routR = client.post(url=getRoutDeparts_url, data=data, headers=login_headers,
-                            follow_redirects=False)
-
-        print(routR.json())
-        routJson = routR.json()[0]
-        provinceCode = routJson.get('province_code')
-        regionCode = routJson.get('regin_code')
-
-        # 更新渠道
-        data = {'departName_nav': routJson.get('departName'),
-                'regin_code_nav': regionCode,
-                'province_code_nav': provinceCode,
-                'regin_encode_nav': routJson.get('reginEncode'),
-                'province_encode_nav': routJson.get('provinceEncode'),
-                'departId_nav': routJson.get('departId')
-                }
-
-        updateRoutDeparts = client.post(url=updateRoutDeparts_url, data=data, headers=login_headers,
-                                        follow_redirects=False)
-        print(updateRoutDeparts.json())
-        routJson = updateRoutDeparts.json()
-
-        # 查询产品信息
-        checkCustSearchParam = {"provinceCode": provinceCode,
-                                "regionCode": regionCode,
-                                "qryMode": "0",
-                                "serialNumber": serialNumber,
-                                "queryType": "null",
-                                "tradeTypeCode": "90"}
-        checkCustSearchParams = {'param': checkCustSearchParam}
-
-        checkCustSearch = client.post(url=checkCust_url, params=checkCustSearchParams, headers=login_headers,
+    submitdevelopResult = client.post(url=submitdevelop_url, data=submitdevelopData, headers=login_headers,
+                                      params=submitdevelopParams,
                                       follow_redirects=False)
+    print(submitdevelopResult)
+    print(submitdevelopResult.json())
 
-        print(checkCustSearch.json())
+    if __name__ == '__main__':
+        # 获取登录cookie
+        # login_cookie = getLoginCookie()
+        login_cookie = 'SESSION=' + '949829ea-c096-481b-91cf-804a2e60914d' + ";" + base_cookie
 
-        # qryAllUserInfo
-        qryAllUserInfoData = {'serialNumber': serialNumber, 'tradeTypeCode': tradeTypeCode}
-        qryAllUserInfoResult = client.post(url=qryAllUserInfo_url, data=qryAllUserInfoData, headers=login_headers,
-                                           follow_redirects=False)
-        print(qryAllUserInfoResult.json())
+        headers['Cookie'] = login_cookie
 
-        # type  0 正面  1 背面  2 手持
-        # 上传正面 后得到 {"fileName":"202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","error":0,"url":"https://readimage.10039.cc/202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","fileId":4027973,"base":1212}
-        type = 0
-        fileId = ''
-        localUrl = 'C:\\fakepath\\' + '正面.jpg'
-        # localUrl = 'C:\\fakepath\\' + '背面.jpg'
-        # localUrl = 'C:\\fakepath\\' + '手持.jpg'
+        login_headers = headers
+        print(login_headers)
 
-        faceU = 'https://oss-education.oss-accelerate.aliyuncs.com/1564153514236964866.jpg'
-        faceDataResultJson = uploadImage(client, 0, '', '正面.jpg', faceU)
-        fileId = faceDataResultJson.get('fileId')
-        faceFileName = faceDataResultJson.get('fileName')
-        faceUrl = faceDataResultJson.get('url')
-        faceBase = faceDataResultJson.get('base')
-        faceBase = faceBase.replace("data:image/jpeg;base64,", "")
+        with httpx.Client(base_url=base_url) as client:
+            # 获取渠道
+            data = {"departNameFilter": "上海", "sort": "province_code", "order": "asc"}
+            routR = client.post(url=getRoutDeparts_url, data=data, headers=login_headers,
+                                follow_redirects=False)
 
-        backUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564176638693208065.jpg'
-        backDataResultJson = uploadImage(client, 1, fileId, '背面.jpg', backUrl)
-        backFileName = backDataResultJson.get('fileName')
-        backUrl = backDataResultJson.get('url')
-        backBase = backDataResultJson.get('base')
-        backBase = backBase.replace("data:image/jpeg;base64,", "")
+            print(routR.json())
+            routJson = routR.json()[0]
+            provinceCode = routJson.get('province_code')
+            regionCode = routJson.get('regin_code')
+            departId = routJson.get('departId')
+            departName = routJson.get('departName')
 
-        holdUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564177558235639809.jpg'
-        holdDataResultJson = uploadImage(client, 2, fileId, '手持.jpg', holdUrl)
-        fileId = holdDataResultJson.get('fileId')
-        holdFileName = holdDataResultJson.get('fileName')
-        holdUrl = holdDataResultJson.get('url')
-        holdBase = holdDataResultJson.get('base')
+            # 更新渠道
+            data = {'departName_nav': departName,
+                    'regin_code_nav': regionCode,
+                    'province_code_nav': provinceCode,
+                    'regin_encode_nav': routJson.get('reginEncode'),
+                    'province_encode_nav': routJson.get('provinceEncode'),
+                    'departId_nav': departId
+                    }
 
-        # OCR识别
-        faceOCR = getOCR(faceBase)
+            updateRoutDeparts = client.post(url=updateRoutDeparts_url, data=data, headers=login_headers,
+                                            follow_redirects=False)
+            print(updateRoutDeparts.json())
+            routJson = updateRoutDeparts.json()
 
-        # createCustomer
-        createCustomerJson = createCustomer(client, fileId, faceBase, faceUrl, backUrl, holdUrl, faceOCR.json(),
-                                            provinceCode, regionCode)
+            # 查询产品信息
+            checkCustSearchParam = {"provinceCode": provinceCode,
+                                    "regionCode": regionCode,
+                                    "qryMode": "0",
+                                    "serialNumber": serialNumber,
+                                    "queryType": "null",
+                                    "tradeTypeCode": "90"}
+            checkCustSearchParams = {'param': checkCustSearchParam}
 
-        # checkPreAccount
-        checkPreAccount(client, faceOCR.json(), serialNumber)
-        redisAddAstrict(client, faceOCR.json(), serialNumber)
+            checkCustSearch = client.post(url=checkCust_url, params=checkCustSearchParams, headers=login_headers,
+                                          follow_redirects=False)
+
+            print(checkCustSearch.json())
+            checkCustSearchJson = checkCustSearch.json()
+
+            # qryAllUserInfo
+            qryAllUserInfoData = {'serialNumber': serialNumber, 'tradeTypeCode': tradeTypeCode}
+            qryAllUserInfoResult = client.post(url=qryAllUserInfo_url, data=qryAllUserInfoData, headers=login_headers,
+                                               follow_redirects=False)
+            print(qryAllUserInfoResult.json())
+
+            # type  0 正面  1 背面  2 手持
+            # 上传正面 后得到 {"fileName":"202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","error":0,"url":"https://readimage.10039.cc/202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","fileId":4027973,"base":1212}
+            faceU = 'https://oss-education.oss-accelerate.aliyuncs.com/1564153514236964866.jpg'
+            faceDataResultJson = uploadImage(client, 0, '', '正面.jpg', faceU)
+            fileId = faceDataResultJson.get('fileId')
+            faceFileName = faceDataResultJson.get('fileName')
+            faceUrl = faceDataResultJson.get('url')
+            faceBase = faceDataResultJson.get('base')
+            faceBase = faceBase.replace("data:image/jpeg;base64,", "")
+
+            backUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564176638693208065.jpg'
+            backDataResultJson = uploadImage(client, 1, fileId, '背面.jpg', backUrl)
+            backFileName = backDataResultJson.get('fileName')
+            backUrl = backDataResultJson.get('url')
+            backBase = backDataResultJson.get('base')
+            backBase = backBase.replace("data:image/jpeg;base64,", "")
+
+            holdUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564177558235639809.jpg'
+            holdDataResultJson = uploadImage(client, 2, fileId, '手持.jpg', holdUrl)
+            fileId = holdDataResultJson.get('fileId')
+            holdFileName = holdDataResultJson.get('fileName')
+            holdUrl = holdDataResultJson.get('url')
+            holdBase = holdDataResultJson.get('base')
+
+            # OCR识别
+            faceOCR = getOCR(faceBase)
+
+            # createCustomer
+            createCustomerJson = createCustomer(client, fileId, faceBase, faceUrl, backUrl, holdUrl, faceOCR.json(),
+                                                provinceCode, regionCode)
+
+            # checkPreAccount
+            checkPreAccount(client, faceOCR.json(), serialNumber)
+            redisAddAstrict(client, faceOCR.json(), serialNumber)
+
+            # submitdevelop
+            submitdevelop(client, createCustomerJson, fileId, faceOCR.json())
+
+            # costInfo
