@@ -1,13 +1,38 @@
 import time
 
 import requests
+import uvicorn
+import yaml
 from fastapi import FastAPI
+from loguru import logger
 from playwright.sync_api import Playwright, sync_playwright
+from pydantic import BaseModel
 
 yzm_url = 'https://crm.10039.cc/crm/validateCode'
 ocr_url = 'http://192.168.1.91:9898/ocr/file'
 
 app = FastAPI()
+
+
+class PostBody(BaseModel):
+    msisdn: str
+    city: str
+    faceUrl: str
+    backUrl: str
+    holdUrl: str
+
+
+@app.post("/create")
+def create(postBody: PostBody):
+    logger.info(f'postBody:{postBody.json()}')
+    try:
+        logger.info(f'postBody:{postBody.json()}')
+        runPlayWRight(postBody)
+    except Exception as e:
+        logger.error(f'处理失败{e}')
+        return {"success": "false", "msg": e}
+    return {"success": "true"}
+
 
 headers = {
     'Host': 'crm.10039.cc',
@@ -25,19 +50,23 @@ headers = {
 cookie = ['login_sms_zhangwenrui=1']
 
 
-def run(playwright: Playwright) -> None:
-    browser = playwright.chromium.launch(headless=False, channel='chrome',
-                                         args=['--disable-blink-features=AutomationControlled'], slow_mo=1000)
+def on_response(response, url):
+    if '/VCommonController/qryAllUserInfo' in response.url and response.status == 200:
+        print("%s得到的响应为：" % url, response.json())
+
+
+def run(playwright: Playwright, postBody=None) -> None:
+    browser = playwright.chromium.launch(headless=False, channel='chrome', slow_mo=500)
     context = browser.new_context()
-    context.add_init_script(path='stealth.min.js')
     context.add_cookies(
         cookies=[{'name': 'login_sms_zhangwenrui', 'value': '1', 'path': '/', 'domain': 'crm.10039.cc'}])
 
     # Open new page
     page = context.new_page()
 
+    url = "https://crm.10039.cc/crm/manager/login/login.jsp"
     # Go to https://crm.10039.cc/crm/manager/login/login.jsp
-    page.goto("https://crm.10039.cc/crm/manager/login/login.jsp")
+    page.goto(url)
 
     cookies = context.cookies()
     cookiesFor = ''
@@ -52,10 +81,10 @@ def run(playwright: Playwright) -> None:
     res = requests.post(ocr_url, files=yzmFile, timeout=4)
 
     # Fill [placeholder="请输入工号"]
-    page.locator("[placeholder=\"请输入工号\"]").fill("zhangwenrui")
+    page.locator("[placeholder=\"请输入工号\"]").fill(username)
 
     # Fill [placeholder="请输入密码"]
-    page.locator("[placeholder=\"请输入密码\"]").fill("Abc1234")
+    page.locator("[placeholder=\"请输入密码\"]").fill(password)
 
     # Fill [placeholder="验证码"]
     page.locator("[placeholder=\"验证码\"]").fill(res.text)
@@ -81,18 +110,11 @@ def run(playwright: Playwright) -> None:
     page.locator("[placeholder=\"渠道名称\"]").click()
 
     # Fill [placeholder="渠道名称"]
-    page.locator("[placeholder=\"渠道名称\"]").fill("上海")
+    page.locator("[placeholder=\"渠道名称\"]").fill(postBody.city)
 
     # Click text=  <input type="button" id="" onclick="onclic()" value="查询" class="form_sub_2">
     page.click("//input[@onclick=\"onclic()\"]")
 
-    # 选中 <tr datagrid-row-index="0" class="datagrid-row">
-    #       <td field="departName">
-    #           <div style="width:1782px;text-align:left;white-space:normal;height:auto;" class="datagrid-cell ">杭州大坝科技有限公司_上海</div>
-    #       </td>
-    # <tr datagrid-row-index="0" class="datagrid-row datagrid-row-selected">
-    #  //*[@id="newForm"]/div/div/div/div/div[2]/div[2]/table/tbody/tr[1]
-    #  //tr[@datagrid-row-index][1]
     # Click .datagrid-view2 > .datagrid-body
     print('查询点击1')
     page.click('.datagrid-view2 > .datagrid-body')
@@ -106,7 +128,7 @@ def run(playwright: Playwright) -> None:
     page.locator("input[name=\"identityNum\"]").click()
 
     # Fill input[name="identityNum"]
-    page.locator("input[name=\"identityNum\"]").fill("16518210274")
+    page.locator("input[name=\"identityNum\"]").fill(postBody.msisdn)
 
     # Click input[name="button"]
     page.locator("input[name=\"button\"]").click()
@@ -114,16 +136,21 @@ def run(playwright: Playwright) -> None:
     # Click text=下一步
     page.locator("text=下一步").click()
     page.wait_for_url(
-        "https://crm.10039.cc/crm/costomerDataReverseController/costomerDataReverseRedirect?serialNumber=16518210274&packageKindCode=X001LXTC&tradeTypeCode=90")
+        "https://crm.10039.cc/crm/costomerDataReverseController/costomerDataReverseRedirect?serialNumber=" + postBody.msisdn + "&packageKindCode=X001LXTC&tradeTypeCode=90")
 
+    page.on('response',
+            lambda response: on_response(response, "https://crm.10039.cc/crm/VCommonController/qryAllUserInfo"))
+    s = page.locator('//span[@class="xubox_msg xubox_text"]')
+
+    assert s
     time.sleep(2)
 
     # Click text=新建客户
     page.locator("text=新建客户").click()
-
+    logger.info('新建客户')
     # Click input[name="custPhoto"] >> nth=0
     page.frame_locator("iframe[name=\"xubox_iframe1\"]").locator("input[name=\"custPhoto\"]").first.click()
-    faceUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564153514236964866.jpg'
+    faceUrl = postBody.faceUrl
     faceUResult = requests.get(faceUrl)
     faceFiles = [{"name": "正面.jpg", "mimeType": "image/jpeg", "buffer": faceUResult.content}]
     # Upload 1a8cd62204730ce7399f8e51ff01eb0.jpg
@@ -136,7 +163,7 @@ def run(playwright: Playwright) -> None:
     # Click input[name="custPhoto"] >> nth=1
     page.frame_locator("iframe[name=\"xubox_iframe1\"]").locator("input[name=\"custPhoto\"]").nth(1).click()
 
-    backUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564176638693208065.jpg'
+    backUrl = postBody.backUrl
     backResult = requests.get(backUrl)
     backFiles = [{"name": "背面.jpg", "mimeType": "image/jpeg", "buffer": backResult.content}]
 
@@ -146,13 +173,14 @@ def run(playwright: Playwright) -> None:
 
     # Click text=确定
     page.frame_locator("iframe[name=\"xubox_iframe1\"]").locator("text=确定").click()
+    logger.info('上传背面')
     time.sleep(2)
     # Click input[name="custPhoto"] >> nth=2
     page.frame_locator("iframe[name=\"xubox_iframe1\"]").locator("input[name=\"custPhoto\"]").nth(2).click()
 
-    holdUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564177558235639809.jpg'
+    holdUrl = postBody.holdUrl
     holdUrlResult = requests.get(holdUrl)
-    holdFiles = [{"name": "背面.jpg", "mimeType": "image/jpeg", "buffer": holdUrlResult.content}]
+    holdFiles = [{"name": "手持.jpg", "mimeType": "image/jpeg", "buffer": holdUrlResult.content}]
 
     # Upload 3f4db6fb080f08201470b0e0d7b55a7.jpg
     page.frame_locator("iframe[name=\"xubox_iframe1\"]").locator("input[name=\"uploadFile\"]").set_input_files(
@@ -160,6 +188,7 @@ def run(playwright: Playwright) -> None:
 
     # Click text=确定
     page.frame_locator("iframe[name=\"xubox_iframe1\"]").locator("text=确定").click()
+    logger.info('上传手持')
     time.sleep(2)
     # Click #add
     page.frame_locator("iframe[name=\"xubox_iframe1\"]").locator("#add").click()
@@ -168,24 +197,29 @@ def run(playwright: Playwright) -> None:
     page.locator("text=下一步").click()
     page.wait_for_url(
         "https://crm.10039.cc/crm/creatCustController/costInfo?packageName=%E4%B9%90%E4%BA%AB%E4%BA%B2%E6%83%856%E5%85%83%E5%A5%97%E9%A4%90-CMC-B")
+    time.sleep(2)
 
-    print('查询点击3')
-
-    # Click text=订单提交
-    page.locator("text=订单提交").click()
-
-    # Click text=确定
-    page.locator("text=确定").click()
-
-    # Click a:has-text("客户资料返档")
-    page.locator("a:has-text(\"客户资料返档\")").click()
-    page.wait_for_url("https://crm.10039.cc/crm/costomerDataReverseController/costomerDataReverseInit?tradeTypeCode=90")
+    logger.info('首页下一步')
 
     # ---------------------
     context.close()
     browser.close()
 
 
-with sync_playwright() as playwright:
-    run(playwright)
+def runPlayWRight(postBody):
+    with sync_playwright() as playwright:
+        run(playwright, postBody)
 
+
+if __name__ == '__main__':
+    config = yaml.load(
+        open('config.yaml', 'r', encoding='utf-8').read(),
+        yaml.SafeLoader
+    )
+    username = config.get('username')
+    password = config.get('password')
+    if username and password:
+        uvicorn.run(app, host="127.0.0.1", port=8000)
+    else:
+        logger.critical('请在"config.yaml"文件中填写账号密码')
+        input('按回车键退出')
