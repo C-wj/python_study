@@ -1,6 +1,7 @@
 from time import sleep
 
 import httpx
+from lxml import etree
 
 headers = {
     'Host': 'crm.10039.cc',
@@ -18,9 +19,11 @@ base_cookie = 'login_sms_zhangwenrui=1;95fa6890880a433a8094107a65abbb23=WyIzNDE2
 
 login_headers = {}
 
-serialNumber = '17031813184'
+serialNumber = '17053954226'
 tradeTypeCode = 90
 base_url = 'https://crm.10039.cc'
+
+ocr_url = 'http://192.168.1.91:9898/ocr/file'
 
 home_url = '/crm/manager/login/login.jsp'
 yzm_url = '/crm/validateCode'
@@ -43,8 +46,8 @@ submitOrderInfo_url = '/crm/VCommonController/submitOrderInfo'
 
 
 def getLoginCookie():
-    with httpx.Client() as s:
-        headers['Cookies'] = base_cookie
+    with httpx.Client(base_url=base_url) as s:
+        headers['Cookie'] = base_cookie
         loginResult = s.get(home_url, headers=headers)
         SESSION = loginResult.cookies['SESSION']
 
@@ -52,17 +55,17 @@ def getLoginCookie():
 
         cookie = 'SESSION=' + SESSION + ";" + base_cookie
 
-        headers['Cookies'] = cookie
+        headers['Cookie'] = cookie
         yzmResult = s.get(yzm_url, headers=headers)
         print(yzmResult.content)
         sleep(1)
         with open("./yzm.png", 'wb') as f:
             f.write(yzmResult.content)
-
-        yzm = input("请输入你看到的验证码")
+        yzmFile = {'image': yzmResult.content}
+        res = s.post(ocr_url, files=yzmFile, timeout=4)
 
         headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        data = {'staffCode': 'zhangwenrui', 'password': 'Abc1234', 'validatecode': yzm}
+        data = {'staffCode': 'zhangwenrui', 'password': 'Abc1234', 'validatecode': res.text}
         loginR = s.post(login_url, headers=headers, data=data, follow_redirects=False)
         login_session = loginR.cookies['SESSION']
         print("login_session:" + login_session)
@@ -74,16 +77,20 @@ def uploadImage(client, type, fileId, fileName, faceUrl):
     faceUResult = client.get(faceUrl)
     files = {'uploadFile': (fileName, faceUResult.read(), 'image/jpeg')}
     print(faceUResult)
-    imageResponse = client.post(url=upload_url, data=imageData, headers=login_headers, files=files,
-                                follow_redirects=False)
-    print(imageResponse.json())
-    return imageResponse.json()
+    param = {'dir': 'image'}
+    headers = login_headers
+    imageResponsePageText = client.post(url=upload_url, data=imageData, headers=headers, files=files, params=param,
+                                        follow_redirects=False).text
+    imageResponseHtml = etree.HTML(imageResponsePageText)
+    imageResponse = imageResponseHtml.xpath("//div[@class='crm_main_box']/text()")[1].strip()
+    print(imageResponse)
+    return imageResponse
 
 
 def getUploadImageData(type, fileId, fileName):
     return {'type': type,
             'fileId': fileId,
-            'localUrl': 'C:\\fakepath\\' + fileName}
+            'localUrl': f'C:\\fakepath\\{fileName}'}
 
 
 def getOCR(imageBase):
@@ -214,100 +221,117 @@ def submitdevelop(client, createCustomerJson, fileId, faceOcr, departName, depar
     print(submitdevelopResult)
     print(submitdevelopResult.json())
 
-    if __name__ == '__main__':
-        # 获取登录cookie
-        # login_cookie = getLoginCookie()
-        login_cookie = 'SESSION=' + '949829ea-c096-481b-91cf-804a2e60914d' + ";" + base_cookie
 
-        headers['Cookie'] = login_cookie
+if __name__ == '__main__':
+    # 获取登录cookie
+    # login_cookie = getLoginCookie()
+    login_cookie = 'SESSION=' + 'eb9bd1a0-9e6e-4738-aa6f-ee1e8ff8ed78' + ";" + base_cookie
 
-        login_headers = headers
-        print(login_headers)
+    headers['Cookie'] = login_cookie
 
-        with httpx.Client(base_url=base_url) as client:
-            # 获取渠道
-            data = {"departNameFilter": "上海", "sort": "province_code", "order": "asc"}
-            routR = client.post(url=getRoutDeparts_url, data=data, headers=login_headers,
-                                follow_redirects=False)
+    login_headers = headers
+    print(login_headers)
 
-            print(routR.json())
-            routJson = routR.json()[0]
-            provinceCode = routJson.get('province_code')
-            regionCode = routJson.get('regin_code')
-            departId = routJson.get('departId')
-            departName = routJson.get('departName')
+    with httpx.Client(base_url=base_url) as client:
+        # 获取渠道
+        data = {"departNameFilter": "_苏州", "sort": "province_code", "order": "asc"}
+        routR = client.post(url=getRoutDeparts_url, data=data, headers=login_headers,
+                            follow_redirects=False)
 
-            # 更新渠道
-            data = {'departName_nav': departName,
-                    'regin_code_nav': regionCode,
-                    'province_code_nav': provinceCode,
-                    'regin_encode_nav': routJson.get('reginEncode'),
-                    'province_encode_nav': routJson.get('provinceEncode'),
-                    'departId_nav': departId
-                    }
+        print(routR.json())
+        routJson = routR.json()[0]
+        provinceCode = routJson.get('province_code')
+        regionCode = routJson.get('regin_code')
+        departId = routJson.get('departId')
+        departName = routJson.get('departName')
 
-            updateRoutDeparts = client.post(url=updateRoutDeparts_url, data=data, headers=login_headers,
-                                            follow_redirects=False)
-            print(updateRoutDeparts.json())
-            routJson = updateRoutDeparts.json()
+        # 更新渠道
+        data = {'departName_nav': departName,
+                'regin_code_nav': regionCode,
+                'province_code_nav': provinceCode,
+                'regin_encode_nav': routJson.get('reginEncode'),
+                'province_encode_nav': routJson.get('provinceEncode'),
+                'departId_nav': departId
+                }
 
-            # 查询产品信息
-            checkCustSearchParam = {"provinceCode": provinceCode,
-                                    "regionCode": regionCode,
-                                    "qryMode": "0",
-                                    "serialNumber": serialNumber,
-                                    "queryType": "null",
-                                    "tradeTypeCode": "90"}
-            checkCustSearchParams = {'param': checkCustSearchParam}
+        updateRoutDeparts = client.post(url=updateRoutDeparts_url, data=data, headers=login_headers,
+                                        follow_redirects=False)
+        print(updateRoutDeparts.json())
+        routJson = updateRoutDeparts.json()
 
-            checkCustSearch = client.post(url=checkCust_url, params=checkCustSearchParams, headers=login_headers,
-                                          follow_redirects=False)
+        # 查询产品信息
+        checkCustSearchParam = {"provinceCode": provinceCode,
+                                "regionCode": regionCode,
+                                "qryMode": "0",
+                                "serialNumber": serialNumber,
+                                "queryType": "null",
+                                "tradeTypeCode": "90"}
+        checkCustSearchParams = {'param': checkCustSearchParam}
 
-            print(checkCustSearch.json())
-            checkCustSearchJson = checkCustSearch.json()
+        checkCustSearch = client.post(url=checkCust_url, params=checkCustSearchParams, headers=login_headers,
+                                      follow_redirects=False)
 
-            # qryAllUserInfo
-            qryAllUserInfoData = {'serialNumber': serialNumber, 'tradeTypeCode': tradeTypeCode}
-            qryAllUserInfoResult = client.post(url=qryAllUserInfo_url, data=qryAllUserInfoData, headers=login_headers,
-                                               follow_redirects=False)
-            print(qryAllUserInfoResult.json())
+        print(checkCustSearch.json())
+        checkCustSearchJson = checkCustSearch.json()
 
-            # type  0 正面  1 背面  2 手持
-            # 上传正面 后得到 {"fileName":"202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","error":0,"url":"https://readimage.10039.cc/202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","fileId":4027973,"base":1212}
-            faceU = 'https://oss-education.oss-accelerate.aliyuncs.com/1564153514236964866.jpg'
-            faceDataResultJson = uploadImage(client, 0, '', '正面.jpg', faceU)
-            fileId = faceDataResultJson.get('fileId')
-            faceFileName = faceDataResultJson.get('fileName')
-            faceUrl = faceDataResultJson.get('url')
-            faceBase = faceDataResultJson.get('base')
-            faceBase = faceBase.replace("data:image/jpeg;base64,", "")
+        # qryAllUserInfo
+        qryAllUserInfoData = {'serialNumber': serialNumber, 'tradeTypeCode': tradeTypeCode}
+        qryAllUserInfoResult = client.post(url=qryAllUserInfo_url, data=qryAllUserInfoData, headers=login_headers,
+                                           follow_redirects=False)
+        print(qryAllUserInfoResult.json())
 
-            backUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564176638693208065.jpg'
-            backDataResultJson = uploadImage(client, 1, fileId, '背面.jpg', backUrl)
-            backFileName = backDataResultJson.get('fileName')
-            backUrl = backDataResultJson.get('url')
-            backBase = backDataResultJson.get('base')
-            backBase = backBase.replace("data:image/jpeg;base64,", "")
+        # type  0 正面  1 背面  2 手持
+        # 上传正面 后得到 {"fileName":"202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","error":0,"url":"https://readimage.10039.cc/202208/agbf6e433ccde84767b98bf004f419bdd6.jpg","fileId":4027973,"base":1212}
+        faceU = 'https://oss-education.oss-accelerate.aliyuncs.com/1564153514236964866.jpg'
+        faceDataResultJson = uploadImage(client, 0, '', '正面.jpg', faceU)
+        fileId = faceDataResultJson.get('fileId')
+        faceFileName = faceDataResultJson.get('fileName')
+        faceUrl = faceDataResultJson.get('url')
+        faceBase = faceDataResultJson.get('base')
+        faceBase = faceBase.replace("data:image/jpeg;base64,", "")
 
-            holdUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564177558235639809.jpg'
-            holdDataResultJson = uploadImage(client, 2, fileId, '手持.jpg', holdUrl)
-            fileId = holdDataResultJson.get('fileId')
-            holdFileName = holdDataResultJson.get('fileName')
-            holdUrl = holdDataResultJson.get('url')
-            holdBase = holdDataResultJson.get('base')
+        backUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564176638693208065.jpg'
+        backDataResultJson = uploadImage(client, 1, fileId, '背面.jpg', backUrl)
+        backFileName = backDataResultJson.get('fileName')
+        backUrl = backDataResultJson.get('url')
+        backBase = backDataResultJson.get('base')
+        backBase = backBase.replace("data:image/jpeg;base64,", "")
 
-            # OCR识别
-            faceOCR = getOCR(faceBase)
+        holdUrl = 'https://oss-education.oss-accelerate.aliyuncs.com/1564177558235639809.jpg'
+        holdDataResultJson = uploadImage(client, 2, fileId, '手持.jpg', holdUrl)
+        fileId = holdDataResultJson.get('fileId')
+        holdFileName = holdDataResultJson.get('fileName')
+        holdUrl = holdDataResultJson.get('url')
+        holdBase = holdDataResultJson.get('base')
 
-            # createCustomer
-            createCustomerJson = createCustomer(client, fileId, faceBase, faceUrl, backUrl, holdUrl, faceOCR.json(),
-                                                provinceCode, regionCode)
+        # OCR识别
+        faceOCR = getOCR(faceBase)
 
-            # checkPreAccount
-            checkPreAccount(client, faceOCR.json(), serialNumber)
-            redisAddAstrict(client, faceOCR.json(), serialNumber)
+        # createCustomer
+        createCustomerJson = createCustomer(client, fileId, faceBase, faceUrl, backUrl, holdUrl, faceOCR.json(),
+                                            provinceCode, regionCode)
 
-            # submitdevelop
-            submitdevelop(client, createCustomerJson, fileId, faceOCR.json())
+        # checkPreAccount
+        checkPreAccount(client, faceOCR.json(), serialNumber)
+        redisAddAstrict(client, faceOCR.json(), serialNumber)
 
-            # costInfo
+        # submitdevelop
+        submitdevelop(client, createCustomerJson, fileId, faceOCR.json())
+
+        # costInfo
+
+# if __name__ == '__main__':
+#     login_cookie = 'SESSION=' + '8429a689-2fde-4785-a96e-225b1771a86c' + ";" + base_cookie
+#
+#     headers['Cookie'] = login_cookie
+#     with httpx.Client(base_url=base_url) as client:
+#         faceU = 'https://oss-education.oss-accelerate.aliyuncs.com/1564153514236964866.jpg'
+#         fileName ='正面.jpg'
+#         imageData = getUploadImageData(type, '', fileName)
+#         faceUResult = client.get(faceU)
+#         files = {'uploadFile': (fileName, faceUResult.read(), 'image/jpeg')}
+#         print(faceUResult)
+#         param = {'dir': 'image'}
+#         imageResponse = client.post(url=upload_url, data=imageData, headers=headers, files=files, params=param,
+#                                     follow_redirects=False)
+#         print(imageResponse.json())

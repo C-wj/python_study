@@ -92,14 +92,14 @@ if __name__ == '__main__':
     # print(login_headers)
 
     # 上传图片
-    # with httpx.Client(verify=False) as client:
-    # param = {'dir', 'image'}
-    # imagePath = './正面.jpg'
-    #
-    # files = {'uploadFile': ('正面.jpg', open(imagePath, 'rb'), 'image/jpeg')}
-    # uploadR = client.post(login_url, headers=login_headers, files=files, params=param)
+    with httpx.Client(verify=False) as client:
+        param = {'dir', 'image'}
+    imagePath = './正面.jpg'
+
+    files = {'uploadFile': ('正面.jpg', open(imagePath, 'rb'), 'image/jpeg')}
+    uploadR = client.post(login_url, headers=login_headers, files=files, params=param)
     # uploadR = client.post("http://192.168.6.56/voice-manage/sys_files", files=files, headers=headers)
-    # print(uploadR.text)
+    print(uploadR.text)
     # login_headers['Content-Type'] = 'application/x-www-form-urlencoded'
     # data = {"departNameFilter": "深圳", "sort": "province_code", "order": "asc"}
     # routR = client.post("https://crm.10039.cc/crm/loginController/getRoutDeparts", data=data, headers=login_headers,

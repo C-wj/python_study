@@ -1,0 +1,1605 @@
+{
+  "971": {
+    "province_name": "青海省",
+    "cities": {
+      "975": {
+        "city_name": "果洛藏族自治州",
+        "counties": {}
+      },
+      "970": {
+        "city_name": "海北藏族自治州",
+        "counties": {}
+      },
+      "972": {
+        "city_name": "海东市",
+        "counties": {}
+      },
+      "974": {
+        "city_name": "海南藏族自治州",
+        "counties": {}
+      },
+      "977": {
+        "city_name": "海西蒙古族藏族自治州",
+        "counties": {}
+      },
+      "973": {
+        "city_name": "黄南藏族自治州",
+        "counties": {}
+      },
+      "971": {
+        "city_name": "西宁市",
+        "counties": {}
+      },
+      "976": {
+        "city_name": "玉树藏族自治州",
+        "counties": {}
+      }
+    }
+  },
+  "951": {
+    "province_name": "宁夏回族自治区",
+    "cities": {
+      "954": {
+        "city_name": "固原市",
+        "counties": {}
+      },
+      "952": {
+        "city_name": "石嘴山市",
+        "counties": {}
+      },
+      "953": {
+        "city_name": "吴忠市",
+        "counties": {}
+      },
+      "951": {
+        "city_name": "银川市",
+        "counties": {}
+      },
+      "955": {
+        "city_name": "中卫市",
+        "counties": {}
+      }
+    }
+  },
+  "991": {
+    "province_name": "新疆维吾尔自治区",
+    "cities": {
+      "997": {
+        "city_name": "阿克苏地区",
+        "counties": {}
+      },
+      "659002": {
+        "city_name": "阿拉尔市",
+        "counties": {}
+      },
+      "906": {
+        "city_name": "阿勒泰地区",
+        "counties": {}
+      },
+      "996": {
+        "city_name": "巴音郭楞蒙古自治州",
+        "counties": {}
+      },
+      "909": {
+        "city_name": "博尔塔拉蒙古自治州",
+        "counties": {}
+      },
+      "994": {
+        "city_name": "昌吉回族自治州",
+        "counties": {}
+      },
+      "902": {
+        "city_name": "哈密地区",
+        "counties": {}
+      },
+      "903": {
+        "city_name": "和田地区",
+        "counties": {}
+      },
+      "998": {
+        "city_name": "喀什地区",
+        "counties": {}
+      },
+      "990": {
+        "city_name": "克拉玛依市",
+        "counties": {}
+      },
+      "908": {
+        "city_name": "克孜勒苏柯尔克孜自治州",
+        "counties": {}
+      },
+      "993": {
+        "city_name": "石河子市",
+        "counties": {}
+      },
+      "901": {
+        "city_name": "塔城地区",
+        "counties": {}
+      },
+      "995": {
+        "city_name": "吐鲁番地区",
+        "counties": {}
+      },
+      "659003": {
+        "city_name": "图木舒克市",
+        "counties": {}
+      },
+      "659004": {
+        "city_name": "五家渠市",
+        "counties": {}
+      },
+      "991": {
+        "city_name": "乌鲁木齐市",
+        "counties": {}
+      },
+      "999": {
+        "city_name": "伊犁哈萨克自治州",
+        "counties": {}
+      }
+    }
+  },
+  "931": {
+    "province_name": "甘肃省",
+    "cities": {
+      "943": {
+        "city_name": "白银市",
+        "counties": {}
+      },
+      "932": {
+        "city_name": "定西市",
+        "counties": {}
+      },
+      "941": {
+        "city_name": "甘南藏族自治州",
+        "counties": {}
+      },
+      "947": {
+        "city_name": "嘉峪关市",
+        "counties": {}
+      },
+      "945": {
+        "city_name": "金昌市",
+        "counties": {}
+      },
+      "937": {
+        "city_name": "酒泉市",
+        "counties": {}
+      },
+      "931": {
+        "city_name": "兰州市",
+        "counties": {}
+      },
+      "930": {
+        "city_name": "临夏回族自治州",
+        "counties": {}
+      },
+      "939": {
+        "city_name": "陇南市",
+        "counties": {}
+      },
+      "933": {
+        "city_name": "平凉市",
+        "counties": {}
+      },
+      "934": {
+        "city_name": "庆阳市",
+        "counties": {}
+      },
+      "938": {
+        "city_name": "天水市",
+        "counties": {}
+      },
+      "935": {
+        "city_name": "武威市",
+        "counties": {}
+      },
+      "936": {
+        "city_name": "张掖市",
+        "counties": {}
+      }
+    }
+  },
+  "871": {
+    "province_name": "云南省",
+    "cities": {
+      "875": {
+        "city_name": "保山市",
+        "counties": {}
+      },
+      "878": {
+        "city_name": "楚雄彝族自治州",
+        "counties": {}
+      },
+      "872": {
+        "city_name": "大理白族自治州",
+        "counties": {}
+      },
+      "886": {
+        "city_name": "德宏傣族景颇族自治州",
+        "counties": {}
+      },
+      "887": {
+        "city_name": "迪庆藏族自治州",
+        "counties": {}
+      },
+      "692": {
+        "city_name": "红河哈尼族彝族自治州",
+        "counties": {}
+      },
+      "874": {
+        "city_name": "曲靖市",
+        "counties": {}
+      },
+      "876": {
+        "city_name": "文山壮族苗族自治州",
+        "counties": {}
+      },
+      "691": {
+        "city_name": "西双版纳傣族自治州",
+        "counties": {}
+      },
+      "877": {
+        "city_name": "玉溪市",
+        "counties": {}
+      },
+      "870": {
+        "city_name": "昭通市",
+        "counties": {}
+      },
+      "881": {
+        "city_name": "怒江傈僳族自治州",
+        "counties": {}
+      },
+      "873": {
+        "city_name": "普洱市",
+        "counties": {}
+      },
+      "871": {
+        "city_name": "昆明市",
+        "counties": {}
+      },
+      "888": {
+        "city_name": "丽江市",
+        "counties": {}
+      },
+      "883": {
+        "city_name": "临沧市",
+        "counties": {}
+      }
+    }
+  },
+  "290": {
+    "province_name": "陕西省",
+    "cities": {
+      "910": {
+        "city_name": "咸阳市",
+        "counties": {}
+      },
+      "911": {
+        "city_name": "延安市",
+        "counties": {}
+      },
+      "912": {
+        "city_name": "榆林市",
+        "counties": {}
+      },
+      "916": {
+        "city_name": "汉中市",
+        "counties": {}
+      },
+      "914": {
+        "city_name": "商洛市",
+        "counties": {}
+      },
+      "919": {
+        "city_name": "铜川市",
+        "counties": {}
+      },
+      "913": {
+        "city_name": "渭南市",
+        "counties": {}
+      },
+      "29": {
+        "city_name": "西安市",
+        "counties": {}
+      },
+      "915": {
+        "city_name": "安康市",
+        "counties": {}
+      },
+      "917": {
+        "city_name": "宝鸡市",
+        "counties": {}
+      }
+    }
+  },
+  "891": {
+    "province_name": "西藏自治区",
+    "cities": {
+      "892": {
+        "city_name": "日喀则地区",
+        "counties": {}
+      },
+      "893": {
+        "city_name": "山南地区",
+        "counties": {}
+      },
+      "897": {
+        "city_name": "阿里地区",
+        "counties": {}
+      },
+      "895": {
+        "city_name": "昌都地区",
+        "counties": {}
+      },
+      "891": {
+        "city_name": "拉萨市",
+        "counties": {}
+      },
+      "894": {
+        "city_name": "林芝地区",
+        "counties": {}
+      },
+      "896": {
+        "city_name": "那曲地区",
+        "counties": {}
+      }
+    }
+  },
+  "898": {
+    "province_name": "海南省",
+    "cities": {
+      "469030": {
+        "city_name": "白沙黎族自治县",
+        "counties": {}
+      },
+      "469002": {
+        "city_name": "琼海市",
+        "counties": {}
+      },
+      "469036": {
+        "city_name": "琼中黎族苗族自治县",
+        "counties": {}
+      },
+      "460300": {
+        "city_name": "三沙市",
+        "counties": {}
+      },
+      "469035": {
+        "city_name": "保亭黎族苗族自治县",
+        "counties": {}
+      },
+      "469031": {
+        "city_name": "昌江黎族自治县",
+        "counties": {}
+      },
+      "469027": {
+        "city_name": "澄迈县",
+        "counties": {}
+      },
+      "469003": {
+        "city_name": "儋州市",
+        "counties": {}
+      },
+      "469025": {
+        "city_name": "定安县",
+        "counties": {}
+      },
+      "469007": {
+        "city_name": "东方市",
+        "counties": {}
+      },
+      "898": {
+        "city_name": "海口市",
+        "counties": {}
+      },
+      "469033": {
+        "city_name": "乐东黎族自治县",
+        "counties": {}
+      },
+      "469028": {
+        "city_name": "临高县",
+        "counties": {}
+      },
+      "469034": {
+        "city_name": "陵水黎族自治县",
+        "counties": {}
+      },
+      "721": {
+        "city_name": "三亚市",
+        "counties": {}
+      },
+      "469026": {
+        "city_name": "屯昌县",
+        "counties": {}
+      },
+      "469006": {
+        "city_name": "万宁市",
+        "counties": {}
+      },
+      "469005": {
+        "city_name": "文昌市",
+        "counties": {}
+      },
+      "469001": {
+        "city_name": "五指山市",
+        "counties": {}
+      }
+    }
+  },
+  "240": {
+    "province_name": "辽宁省",
+    "cities": {
+      "421": {
+        "city_name": "朝阳市",
+        "counties": {}
+      },
+      "411": {
+        "city_name": "大连市",
+        "counties": {}
+      },
+      "415": {
+        "city_name": "丹东市",
+        "counties": {}
+      },
+      "413": {
+        "city_name": "抚顺市",
+        "counties": {}
+      },
+      "418": {
+        "city_name": "阜新市",
+        "counties": {}
+      },
+      "429": {
+        "city_name": "葫芦岛市",
+        "counties": {}
+      },
+      "412": {
+        "city_name": "鞍山市",
+        "counties": {}
+      },
+      "414": {
+        "city_name": "本溪市",
+        "counties": {}
+      },
+      "416": {
+        "city_name": "锦州市",
+        "counties": {}
+      },
+      "419": {
+        "city_name": "辽阳市",
+        "counties": {}
+      },
+      "427": {
+        "city_name": "盘锦市",
+        "counties": {}
+      },
+      "24": {
+        "city_name": "沈阳市",
+        "counties": {}
+      },
+      "410": {
+        "city_name": "铁岭市",
+        "counties": {}
+      },
+      "417": {
+        "city_name": "营口市",
+        "counties": {}
+      }
+    }
+  },
+  "230": {
+    "province_name": "重庆",
+    "cities": {
+      "230": {
+        "city_name": "重庆市",
+        "counties": {}
+      }
+    }
+  },
+  "280": {
+    "province_name": "四川省",
+    "cities": {
+      "833": {
+        "city_name": "乐山市",
+        "counties": {}
+      },
+      "834": {
+        "city_name": "凉山彝族自治州",
+        "counties": {}
+      },
+      "830": {
+        "city_name": "泸州市",
+        "counties": {}
+      },
+      "841": {
+        "city_name": "眉山市",
+        "counties": {}
+      },
+      "816": {
+        "city_name": "绵阳市",
+        "counties": {}
+      },
+      "837": {
+        "city_name": "阿坝藏族羌族自治州",
+        "counties": {}
+      },
+      "827": {
+        "city_name": "巴中市",
+        "counties": {}
+      },
+      "28": {
+        "city_name": "成都市",
+        "counties": {}
+      },
+      "818": {
+        "city_name": "达州市",
+        "counties": {}
+      },
+      "838": {
+        "city_name": "德阳市",
+        "counties": {}
+      },
+      "836": {
+        "city_name": "甘孜藏族自治州",
+        "counties": {}
+      },
+      "826": {
+        "city_name": "广安市",
+        "counties": {}
+      },
+      "839": {
+        "city_name": "广元市",
+        "counties": {}
+      },
+      "813": {
+        "city_name": "自贡市",
+        "counties": {}
+      },
+      "840": {
+        "city_name": "资阳市",
+        "counties": {}
+      },
+      "817": {
+        "city_name": "南充市",
+        "counties": {}
+      },
+      "832": {
+        "city_name": "内江市",
+        "counties": {}
+      },
+      "812": {
+        "city_name": "攀枝花市",
+        "counties": {}
+      },
+      "825": {
+        "city_name": "遂宁市",
+        "counties": {}
+      },
+      "835": {
+        "city_name": "雅安市",
+        "counties": {}
+      },
+      "831": {
+        "city_name": "宜宾市",
+        "counties": {}
+      }
+    }
+  },
+  "851": {
+    "province_name": "贵州省",
+    "cities": {
+      "852": {
+        "city_name": "遵义市",
+        "counties": {}
+      },
+      "854": {
+        "city_name": "黔南布依族苗族自治州",
+        "counties": {}
+      },
+      "859": {
+        "city_name": "黔西南布依族苗族自治州",
+        "counties": {}
+      },
+      "856": {
+        "city_name": "铜仁市",
+        "counties": {}
+      },
+      "853": {
+        "city_name": "安顺市",
+        "counties": {}
+      },
+      "857": {
+        "city_name": "毕节市",
+        "counties": {}
+      },
+      "851": {
+        "city_name": "贵阳市",
+        "counties": {}
+      },
+      "858": {
+        "city_name": "六盘水市",
+        "counties": {}
+      },
+      "855": {
+        "city_name": "黔东南苗族侗族自治州",
+        "counties": {}
+      }
+    }
+  },
+  "220": {
+    "province_name": "天津",
+    "cities": {
+      "220": {
+        "city_name": "天津市",
+        "counties": {}
+      }
+    }
+  },
+  "311": {
+    "province_name": "河北省",
+    "cities": {
+      "312": {
+        "city_name": "保定市",
+        "counties": {}
+      },
+      "317": {
+        "city_name": "沧州市",
+        "counties": {}
+      },
+      "314": {
+        "city_name": "承德市",
+        "counties": {}
+      },
+      "310": {
+        "city_name": "邯郸市",
+        "counties": {}
+      },
+      "318": {
+        "city_name": "衡水市",
+        "counties": {}
+      },
+      "316": {
+        "city_name": "廊坊市",
+        "counties": {}
+      },
+      "335": {
+        "city_name": "秦皇岛市",
+        "counties": {}
+      },
+      "311": {
+        "city_name": "石家庄市",
+        "counties": {}
+      },
+      "315": {
+        "city_name": "唐山市",
+        "counties": {}
+      },
+      "319": {
+        "city_name": "邢台市",
+        "counties": {}
+      },
+      "313": {
+        "city_name": "张家口市",
+        "counties": {}
+      }
+    }
+  },
+  "100": {
+    "province_name": "北京",
+    "cities": {
+      "102": {
+        "city_name": "北京市",
+        "counties": {}
+      }
+    }
+  },
+  "200": {
+    "province_name": "广东省",
+    "cities": {
+      "755": {
+        "city_name": "深圳市",
+        "counties": {}
+      },
+      "769": {
+        "city_name": "东莞市",
+        "counties": {}
+      },
+      "757": {
+        "city_name": "佛山市",
+        "counties": {}
+      },
+      "768": {
+        "city_name": "潮州市",
+        "counties": {}
+      },
+      "762": {
+        "city_name": "河源市",
+        "counties": {}
+      },
+      "752": {
+        "city_name": "惠州市",
+        "counties": {}
+      },
+      "750": {
+        "city_name": "江门市",
+        "counties": {}
+      },
+      "663": {
+        "city_name": "揭阳市",
+        "counties": {}
+      },
+      "668": {
+        "city_name": "茂名市",
+        "counties": {}
+      },
+      "753": {
+        "city_name": "梅州市",
+        "counties": {}
+      },
+      "763": {
+        "city_name": "清远市",
+        "counties": {}
+      },
+      "754": {
+        "city_name": "汕头市",
+        "counties": {}
+      },
+      "660": {
+        "city_name": "汕尾市",
+        "counties": {}
+      },
+      "751": {
+        "city_name": "韶关市",
+        "counties": {}
+      },
+      "662": {
+        "city_name": "阳江市",
+        "counties": {}
+      },
+      "766": {
+        "city_name": "云浮市",
+        "counties": {}
+      },
+      "759": {
+        "city_name": "湛江市",
+        "counties": {}
+      },
+      "758": {
+        "city_name": "肇庆市",
+        "counties": {}
+      },
+      "760": {
+        "city_name": "中山市",
+        "counties": {}
+      },
+      "756": {
+        "city_name": "珠海市",
+        "counties": {}
+      },
+      "20": {
+        "city_name": "广州市",
+        "counties": {}
+      }
+    }
+  },
+  "771": {
+    "province_name": "广西壮族自治区",
+    "cities": {
+      "772": {
+        "city_name": "柳州市",
+        "counties": {}
+      },
+      "771": {
+        "city_name": "南宁市",
+        "counties": {}
+      },
+      "777": {
+        "city_name": "钦州市",
+        "counties": {}
+      },
+      "774": {
+        "city_name": "梧州市",
+        "counties": {}
+      },
+      "775": {
+        "city_name": "玉林市",
+        "counties": {}
+      },
+      "780": {
+        "city_name": "贺州市",
+        "counties": {}
+      },
+      "781": {
+        "city_name": "来宾市",
+        "counties": {}
+      },
+      "779": {
+        "city_name": "北海市",
+        "counties": {}
+      },
+      "776": {
+        "city_name": "百色市",
+        "counties": {}
+      },
+      "783": {
+        "city_name": "崇左市",
+        "counties": {}
+      },
+      "770": {
+        "city_name": "防城港市",
+        "counties": {}
+      },
+      "782": {
+        "city_name": "贵港市",
+        "counties": {}
+      },
+      "773": {
+        "city_name": "桂林市",
+        "counties": {}
+      },
+      "778": {
+        "city_name": "河池市",
+        "counties": {}
+      }
+    }
+  },
+  "351": {
+    "province_name": "山西省",
+    "cities": {
+      "358": {
+        "city_name": "吕梁市",
+        "counties": {}
+      },
+      "349": {
+        "city_name": "朔州市",
+        "counties": {}
+      },
+      "351": {
+        "city_name": "太原市",
+        "counties": {}
+      },
+      "350": {
+        "city_name": "忻州市",
+        "counties": {}
+      },
+      "355": {
+        "city_name": "长治市",
+        "counties": {}
+      },
+      "352": {
+        "city_name": "大同市",
+        "counties": {}
+      },
+      "356": {
+        "city_name": "晋城市",
+        "counties": {}
+      },
+      "354": {
+        "city_name": "晋中市",
+        "counties": {}
+      },
+      "357": {
+        "city_name": "临汾市",
+        "counties": {}
+      },
+      "353": {
+        "city_name": "阳泉市",
+        "counties": {}
+      },
+      "359": {
+        "city_name": "运城市",
+        "counties": {}
+      }
+    }
+  },
+  "471": {
+    "province_name": "内蒙古自治区",
+    "cities": {
+      "473": {
+        "city_name": "乌海市",
+        "counties": {}
+      },
+      "474": {
+        "city_name": "乌兰察布市",
+        "counties": {}
+      },
+      "479": {
+        "city_name": "锡林郭勒盟",
+        "counties": {}
+      },
+      "482": {
+        "city_name": "兴安盟",
+        "counties": {}
+      },
+      "476": {
+        "city_name": "赤峰市",
+        "counties": {}
+      },
+      "477": {
+        "city_name": "鄂尔多斯市",
+        "counties": {}
+      },
+      "471": {
+        "city_name": "呼和浩特市",
+        "counties": {}
+      },
+      "470": {
+        "city_name": "呼伦贝尔市",
+        "counties": {}
+      },
+      "475": {
+        "city_name": "通辽市",
+        "counties": {}
+      },
+      "483": {
+        "city_name": "阿拉善盟",
+        "counties": {}
+      },
+      "472": {
+        "city_name": "包头市",
+        "counties": {}
+      },
+      "478": {
+        "city_name": "巴彦淖尔市",
+        "counties": {}
+      }
+    }
+  },
+  "531": {
+    "province_name": "山东省",
+    "cities": {
+      "543": {
+        "city_name": "滨州市",
+        "counties": {}
+      },
+      "534": {
+        "city_name": "德州市",
+        "counties": {}
+      },
+      "546": {
+        "city_name": "东营市",
+        "counties": {}
+      },
+      "530": {
+        "city_name": "菏泽市",
+        "counties": {}
+      },
+      "531": {
+        "city_name": "济南市",
+        "counties": {}
+      },
+      "537": {
+        "city_name": "济宁市",
+        "counties": {}
+      },
+      "634": {
+        "city_name": "莱芜市",
+        "counties": {}
+      },
+      "635": {
+        "city_name": "聊城市",
+        "counties": {}
+      },
+      "539": {
+        "city_name": "临沂市",
+        "counties": {}
+      },
+      "532": {
+        "city_name": "青岛市",
+        "counties": {}
+      },
+      "633": {
+        "city_name": "日照市",
+        "counties": {}
+      },
+      "538": {
+        "city_name": "泰安市",
+        "counties": {}
+      },
+      "536": {
+        "city_name": "潍坊市",
+        "counties": {}
+      },
+      "631": {
+        "city_name": "威海市",
+        "counties": {}
+      },
+      "535": {
+        "city_name": "烟台市",
+        "counties": {}
+      },
+      "632": {
+        "city_name": "枣庄市",
+        "counties": {}
+      },
+      "533": {
+        "city_name": "淄博市",
+        "counties": {}
+      }
+    }
+  },
+  "371": {
+    "province_name": "河南省",
+    "cities": {
+      "395": {
+        "city_name": "漯河市",
+        "counties": {}
+      },
+      "379": {
+        "city_name": "洛阳市",
+        "counties": {}
+      },
+      "377": {
+        "city_name": "南阳市",
+        "counties": {}
+      },
+      "375": {
+        "city_name": "平顶山市",
+        "counties": {}
+      },
+      "372": {
+        "city_name": "安阳市",
+        "counties": {}
+      },
+      "392": {
+        "city_name": "鹤壁市",
+        "counties": {}
+      },
+      "391": {
+        "city_name": "焦作市",
+        "counties": {}
+      },
+      "410881": {
+        "city_name": "济源市",
+        "counties": {}
+      },
+      "378": {
+        "city_name": "开封市",
+        "counties": {}
+      },
+      "393": {
+        "city_name": "濮阳市",
+        "counties": {}
+      },
+      "398": {
+        "city_name": "三门峡市",
+        "counties": {}
+      },
+      "370": {
+        "city_name": "商丘市",
+        "counties": {}
+      },
+      "376": {
+        "city_name": "信阳市",
+        "counties": {}
+      },
+      "373": {
+        "city_name": "新乡市",
+        "counties": {}
+      },
+      "374": {
+        "city_name": "许昌市",
+        "counties": {}
+      },
+      "371": {
+        "city_name": "郑州市",
+        "counties": {}
+      },
+      "394": {
+        "city_name": "周口市",
+        "counties": {}
+      },
+      "396": {
+        "city_name": "驻马店市",
+        "counties": {}
+      }
+    }
+  },
+  "791": {
+    "province_name": "江西省",
+    "cities": {
+      "701": {
+        "city_name": "鹰潭市",
+        "counties": {}
+      },
+      "797": {
+        "city_name": "赣州市",
+        "counties": {}
+      },
+      "796": {
+        "city_name": "吉安市",
+        "counties": {}
+      },
+      "798": {
+        "city_name": "景德镇市",
+        "counties": {}
+      },
+      "792": {
+        "city_name": "九江市",
+        "counties": {}
+      },
+      "794": {
+        "city_name": "抚州市",
+        "counties": {}
+      },
+      "791": {
+        "city_name": "南昌市",
+        "counties": {}
+      },
+      "799": {
+        "city_name": "萍乡市",
+        "counties": {}
+      },
+      "793": {
+        "city_name": "上饶市",
+        "counties": {}
+      },
+      "790": {
+        "city_name": "新余市",
+        "counties": {}
+      },
+      "795": {
+        "city_name": "宜春市",
+        "counties": {}
+      }
+    }
+  },
+  "270": {
+    "province_name": "湖北省",
+    "cities": {
+      "27": {
+        "city_name": "武汉市",
+        "counties": {}
+      },
+      "420600": {
+        "city_name": "襄阳市",
+        "counties": {}
+      },
+      "715": {
+        "city_name": "咸宁市",
+        "counties": {}
+      },
+      "728": {
+        "city_name": "仙桃市",
+        "counties": {}
+      },
+      "718": {
+        "city_name": "恩施土家族苗族自治州",
+        "counties": {}
+      },
+      "711": {
+        "city_name": "鄂州市",
+        "counties": {}
+      },
+      "713": {
+        "city_name": "黄冈市",
+        "counties": {}
+      },
+      "714": {
+        "city_name": "黄石市",
+        "counties": {}
+      },
+      "724": {
+        "city_name": "荆门市",
+        "counties": {}
+      },
+      "716": {
+        "city_name": "荆州市",
+        "counties": {}
+      },
+      "429005": {
+        "city_name": "潜江市",
+        "counties": {}
+      },
+      "429021": {
+        "city_name": "神农架林区",
+        "counties": {}
+      },
+      "719": {
+        "city_name": "十堰市",
+        "counties": {}
+      },
+      "722": {
+        "city_name": "随州市",
+        "counties": {}
+      },
+      "429006": {
+        "city_name": "天门市",
+        "counties": {}
+      },
+      "712": {
+        "city_name": "孝感市",
+        "counties": {}
+      },
+      "717": {
+        "city_name": "宜昌市",
+        "counties": {}
+      }
+    }
+  },
+  "731": {
+    "province_name": "湖南省",
+    "cities": {
+      "730": {
+        "city_name": "岳阳市",
+        "counties": {}
+      },
+      "744": {
+        "city_name": "张家界市",
+        "counties": {}
+      },
+      "733": {
+        "city_name": "株洲市",
+        "counties": {}
+      },
+      "739": {
+        "city_name": "邵阳市",
+        "counties": {}
+      },
+      "732": {
+        "city_name": "湘潭市",
+        "counties": {}
+      },
+      "743": {
+        "city_name": "湘西土家族苗族自治州",
+        "counties": {}
+      },
+      "737": {
+        "city_name": "益阳市",
+        "counties": {}
+      },
+      "746": {
+        "city_name": "永州市",
+        "counties": {}
+      },
+      "731": {
+        "city_name": "长沙市",
+        "counties": {}
+      },
+      "735": {
+        "city_name": "郴州市",
+        "counties": {}
+      },
+      "734": {
+        "city_name": "衡阳市",
+        "counties": {}
+      },
+      "745": {
+        "city_name": "怀化市",
+        "counties": {}
+      },
+      "738": {
+        "city_name": "娄底市",
+        "counties": {}
+      },
+      "736": {
+        "city_name": "常德市",
+        "counties": {}
+      }
+    }
+  },
+  "431": {
+    "province_name": "吉林省",
+    "cities": {
+      "436": {
+        "city_name": "白城市",
+        "counties": {}
+      },
+      "439": {
+        "city_name": "白山市",
+        "counties": {}
+      },
+      "431": {
+        "city_name": "长春市",
+        "counties": {}
+      },
+      "432": {
+        "city_name": "吉林市",
+        "counties": {}
+      },
+      "437": {
+        "city_name": "辽源市",
+        "counties": {}
+      },
+      "434": {
+        "city_name": "四平市",
+        "counties": {}
+      },
+      "438": {
+        "city_name": "松原市",
+        "counties": {}
+      },
+      "435": {
+        "city_name": "通化市",
+        "counties": {}
+      },
+      "433": {
+        "city_name": "延边朝鲜族自治州",
+        "counties": {}
+      }
+    }
+  },
+  "210": {
+    "province_name": "上海",
+    "cities": {
+      "120": {
+        "city_name": "上海市",
+        "counties": {}
+      }
+    }
+  },
+  "250": {
+    "province_name": "江苏省",
+    "cities": {
+      "519": {
+        "city_name": "常州市",
+        "counties": {}
+      },
+      "517": {
+        "city_name": "淮安市",
+        "counties": {}
+      },
+      "518": {
+        "city_name": "连云港市",
+        "counties": {}
+      },
+      "25": {
+        "city_name": "南京市",
+        "counties": {}
+      },
+      "513": {
+        "city_name": "南通市",
+        "counties": {}
+      },
+      "527": {
+        "city_name": "宿迁市",
+        "counties": {}
+      },
+      "512": {
+        "city_name": "苏州市",
+        "counties": {}
+      },
+      "523": {
+        "city_name": "泰州市",
+        "counties": {}
+      },
+      "510": {
+        "city_name": "无锡市",
+        "counties": {}
+      },
+      "515": {
+        "city_name": "盐城市",
+        "counties": {}
+      },
+      "514": {
+        "city_name": "扬州市",
+        "counties": {}
+      },
+      "511": {
+        "city_name": "镇江市",
+        "counties": {}
+      },
+      "516": {
+        "city_name": "徐州市",
+        "counties": {}
+      }
+    }
+  },
+  "451": {
+    "province_name": "黑龙江省",
+    "cities": {
+      "459": {
+        "city_name": "大庆市",
+        "counties": {}
+      },
+      "457": {
+        "city_name": "大兴安岭地区",
+        "counties": {}
+      },
+      "451": {
+        "city_name": "哈尔滨市",
+        "counties": {}
+      },
+      "468": {
+        "city_name": "鹤岗市",
+        "counties": {}
+      },
+      "456": {
+        "city_name": "黑河市",
+        "counties": {}
+      },
+      "454": {
+        "city_name": "佳木斯市",
+        "counties": {}
+      },
+      "467": {
+        "city_name": "鸡西市",
+        "counties": {}
+      },
+      "453": {
+        "city_name": "牡丹江市",
+        "counties": {}
+      },
+      "452": {
+        "city_name": "齐齐哈尔市",
+        "counties": {}
+      },
+      "464": {
+        "city_name": "七台河市",
+        "counties": {}
+      },
+      "469": {
+        "city_name": "双鸭山市",
+        "counties": {}
+      },
+      "455": {
+        "city_name": "绥化市",
+        "counties": {}
+      },
+      "458": {
+        "city_name": "伊春市",
+        "counties": {}
+      }
+    }
+  },
+  "591": {
+    "province_name": "福建省",
+    "cities": {
+      "591": {
+        "city_name": "福州市",
+        "counties": {}
+      },
+      "597": {
+        "city_name": "龙岩市",
+        "counties": {}
+      },
+      "599": {
+        "city_name": "南平市",
+        "counties": {}
+      },
+      "593": {
+        "city_name": "宁德市",
+        "counties": {}
+      },
+      "594": {
+        "city_name": "莆田市",
+        "counties": {}
+      },
+      "595": {
+        "city_name": "泉州市",
+        "counties": {}
+      },
+      "598": {
+        "city_name": "三明市",
+        "counties": {}
+      },
+      "592": {
+        "city_name": "厦门市",
+        "counties": {}
+      },
+      "596": {
+        "city_name": "漳州市",
+        "counties": {}
+      }
+    }
+  },
+  "571": {
+    "province_name": "浙江省",
+    "cities": {
+      "571": {
+        "city_name": "杭州市",
+        "counties": {}
+      },
+      "572": {
+        "city_name": "湖州市",
+        "counties": {}
+      },
+      "573": {
+        "city_name": "嘉兴市",
+        "counties": {}
+      },
+      "579": {
+        "city_name": "金华市",
+        "counties": {}
+      },
+      "578": {
+        "city_name": "丽水市",
+        "counties": {}
+      },
+      "574": {
+        "city_name": "宁波市",
+        "counties": {}
+      },
+      "570": {
+        "city_name": "衢州市",
+        "counties": {}
+      },
+      "575": {
+        "city_name": "绍兴市",
+        "counties": {}
+      },
+      "576": {
+        "city_name": "台州市",
+        "counties": {}
+      },
+      "577": {
+        "city_name": "温州市",
+        "counties": {}
+      },
+      "580": {
+        "city_name": "舟山市",
+        "counties": {}
+      }
+    }
+  },
+  "551": {
+    "province_name": "安徽省",
+    "cities": {
+      "556": {
+        "city_name": "安庆市",
+        "counties": {}
+      },
+      "552": {
+        "city_name": "蚌埠市",
+        "counties": {}
+      },
+      "567": {
+        "city_name": "亳州市",
+        "counties": {}
+      },
+      "566": {
+        "city_name": "池州市",
+        "counties": {}
+      },
+      "550": {
+        "city_name": "滁州市",
+        "counties": {}
+      },
+      "558": {
+        "city_name": "阜阳市",
+        "counties": {}
+      },
+      "551": {
+        "city_name": "合肥市",
+        "counties": {}
+      },
+      "561": {
+        "city_name": "淮北市",
+        "counties": {}
+      },
+      "554": {
+        "city_name": "淮南市",
+        "counties": {}
+      },
+      "559": {
+        "city_name": "黄山市",
+        "counties": {}
+      },
+      "564": {
+        "city_name": "六安市",
+        "counties": {}
+      },
+      "555": {
+        "city_name": "马鞍山市",
+        "counties": {}
+      },
+      "557": {
+        "city_name": "宿州市",
+        "counties": {}
+      },
+      "562": {
+        "city_name": "铜陵市",
+        "counties": {}
+      },
+      "553": {
+        "city_name": "芜湖市",
+        "counties": {}
+      },
+      "563": {
+        "city_name": "宣城市",
+        "counties": {}
+      }
+    }
+  }
+}

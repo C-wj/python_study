@@ -25,37 +25,46 @@ class PostBody(BaseModel):
 @app.post("/create")
 def create(postBody: PostBody):
     logger.info(f'postBody:{postBody.json()}')
+    c = crm()
     try:
         logger.info(f'postBody:{postBody.json()}')
-        runPlayWRight(postBody)
+        runPlayWRight(postBody, c)
     except Exception as e:
         logger.error(f'处理失败{e}')
-        return {"success": "false", "msg": e}
+        return {"success": "false", "msg": c.msg + e}
     return {"success": "true"}
 
 
-headers = {
-    'Host': 'crm.10039.cc',
-    'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-    'Sec-Fetch-Dest': 'document',
-    'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-Site': 'none',
-    'Sec-Fetch-User': '?1',
-    'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
-}
+class crm:
+    def __init__(self):
+        self.headers = {
+            'Host': 'crm.10039.cc',
+            'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Upgrade-Insecure-Requests': '1',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
+        }
+        self.cookie = ['login_sms_zhangwenrui=1']
+        self.queryResult = None
+        self.msg = None
 
-cookie = ['login_sms_zhangwenrui=1']
+    @classmethod
+    def on_response(cls, response, url):
+        if '/VCommonController/qryAllUserInfo' in response.url and response.status == 200:
+            print("%s得到的响应为：" % url, response.json())
+            qryAllUserInfoResult = response.json()
+            # global queryResult
+            cls.queryResult = qryAllUserInfoResult.get("success")
+            # global msg
+            cls.msg = qryAllUserInfoResult.get("msg")
 
 
-def on_response(response, url):
-    if '/VCommonController/qryAllUserInfo' in response.url and response.status == 200:
-        print("%s得到的响应为：" % url, response.json())
-
-
-def run(playwright: Playwright, postBody=None) -> None:
+def run(playwright: Playwright, postBody=None, c=None) -> None:
     browser = playwright.chromium.launch(headless=False, channel='chrome', slow_mo=500)
     context = browser.new_context()
     context.add_cookies(
@@ -74,8 +83,8 @@ def run(playwright: Playwright, postBody=None) -> None:
         cookiesFor += cookie.get('name') + '=' + cookie.get('value') + ';'
     print(cookiesFor)
 
-    headers['Cookie'] = cookiesFor
-    yzmResult = requests.get(yzm_url, headers=headers)
+    c.headers['Cookie'] = cookiesFor
+    yzmResult = requests.get(yzm_url, headers=c.headers)
     print(yzmResult.content)
     yzmFile = {'image': yzmResult.content}
     res = requests.post(ocr_url, files=yzmFile, timeout=4)
@@ -139,10 +148,8 @@ def run(playwright: Playwright, postBody=None) -> None:
         "https://crm.10039.cc/crm/costomerDataReverseController/costomerDataReverseRedirect?serialNumber=" + postBody.msisdn + "&packageKindCode=X001LXTC&tradeTypeCode=90")
 
     page.on('response',
-            lambda response: on_response(response, "https://crm.10039.cc/crm/VCommonController/qryAllUserInfo"))
-    s = page.locator('//span[@class="xubox_msg xubox_text"]')
-
-    assert s
+            lambda response: crm.on_response(response, "https://crm.10039.cc/crm/VCommonController/qryAllUserInfo"))
+    assert c.queryResult == 'success'
     time.sleep(2)
 
     # Click text=新建客户
@@ -206,9 +213,9 @@ def run(playwright: Playwright, postBody=None) -> None:
     browser.close()
 
 
-def runPlayWRight(postBody):
+def runPlayWRight(postBody, c):
     with sync_playwright() as playwright:
-        run(playwright, postBody)
+        run(playwright, postBody, c)
 
 
 if __name__ == '__main__':
