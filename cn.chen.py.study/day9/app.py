@@ -79,7 +79,12 @@ def form():
                 background-color: #45a049;
             }
             #response {
-                margin-top: 20px;
+               margin-top: 20px;
+                max-height: 200px;
+                overflow-y: auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+                background-color: #f9f9f9;
             }
         </style>
         <script>
@@ -118,7 +123,7 @@ def form():
                 <label for="uid">UID:</label>
                 <select id="uid_select" name="uid" onchange="document.getElementById('uid_input').value = this.value;">
                     <option value="智能人机1号" selected>智能人机1号</option>
-                    <option value="智能人机2号">智能人机2号</option>
+                    <option value="陈平安">陈平安</option>
                     <option value="智能人机3号">智能人机3号</option>
                 </select>
                 <input type="text" id="uid_input" name="uid" value="智能人机1号"><br><br>
@@ -197,7 +202,7 @@ def trigger():
     for item in range(start_item, end_item + 1):
         # 构造 payload 字符串
         payload = payload_template.format(item=str(item).zfill(5), num=str(num), uid=uid_urlencoded)
-
+        print(payload)
         # 发送 POST 请求
         response = requests.post(url, headers=headers, data=payload)
 
