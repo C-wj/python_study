@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trigger Script</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #response {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script>
+        function updateEndItem() {
+            var startItem = document.getElementById("start_item").value;
+            document.getElementById("end_item").value = startItem;
+        }
+
+        function submitForm(event) {
+            event.preventDefault(); // 阻止表单的默认提交行为
+            var form = document.getElementById('triggerForm');
+            var formData = new FormData(form);
+
+            fetch('/trigger', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    var responseDiv = document.getElementById('response');
+                    responseDiv.innerHTML = '<h2>Response Data</h2>';
+                    data.forEach(item => {
+                        responseDiv.innerHTML += '<p>Item: ' + item.item + ', Response: ' + item.response + '</p>';
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>Trigger Script</h1>
+    <form id="triggerForm" onsubmit="submitForm(event)">
+        <label for="uid">UID:</label>
+        <select id="uid_select" name="uid" onchange="document.getElementById('uid_input').value = this.value;">
+            <option value="智能人机1号" selected>智能人机1号</option>
+            <option value="陈平安">陈平安</option>
+            <option value="智能人机3号">智能人机3号</option>
+        </select>
+        <input type="text" id="uid_input" name="uid" value="智能人机1号"><br><br>
+
+        <label for="start_item">Start Item:</label>
+        <select id="start_item_select"
+                onchange="document.getElementById('start_item').value = this.value; updateEndItem();">
+            <option value="9005"> 9005 寰宇护符</option>
+            <option value="25646">25646 神器材料礼盒（鸿蒙圣珠，天火液，涣神沙）</option>
+            <option value="25649">25649 令牌天赐随机</option>
+            <option value="25689 ">25689 高阶技能书</option>
+            <option value="25700">25700 法宝精华礼袋</option>
+            <option value="25821">25821 五星魂器</option>
+            <option value="25852">25852 配饰宝箱 (4星)</option>
+            <option value="25853">25853 配饰宝箱 (5星)</option>
+            <option value="25988">25988 法宝精华自选</option>
+            <option value="25856">25856 铸灵礼盒 (4星)</option>
+            <option value="25857">25857 铸灵礼盒 (5星)</option>
+            <option value="25607">25607 稀有宠自选蛋</option>
+            <option value="25608">25608 稀有宠自选蛋+2</option>
+            <option value="25688">25688 五星神印</option>
+            <option value="25676">25676 法宝 1</option>
+            <option value="25677">25677 法宝 2</option>
+            <option value="25678">25678 法宝 3</option>
+            <option value="25606">25606 天赐令牌自选盒</option>
+        </select>
+        <input type="number" id="start_item" name="start_item" value="9005"><br><br>
+
+        <label for="end_item">End Item:</label>
+        <select id="end_item_select" onchange="document.getElementById('end_item').value = this.value;">
+            <option value="9005"> 9005 寰宇护符</option>
+            <option value="25646">25646 神器材料礼盒（鸿蒙圣珠，天火液，涣神沙）</option>
+            <option value="25649">25649 令牌天赐随机</option>
+            <option value="25689 ">25689 高阶技能书</option>
+            <option value="25700">25700 法宝精华礼袋</option>
+            <option value="25821">25821 五星魂器</option>
+            <option value="25852">25852 配饰宝箱 (4星)</option>
+            <option value="25853">25853 配饰宝箱 (5星)</option>
+            <option value="25988">25988 法宝精华自选</option>
+            <option value="25856">25856 铸灵礼盒 (4星)</option>
+            <option value="25857">25857 铸灵礼盒 (5星)</option>
+            <option value="25607">25607 稀有宠自选蛋</option>
+            <option value="25608">25608 稀有宠自选蛋+2</option>
+            <option value="25688">25688 五星神印</option>
+            <option value="25676">25676 法宝 1</option>
+            <option value="25677">25677 法宝 2</option>
+            <option value="25678">25678 法宝 3</option>
+            <option value="25606">25606 天赐令牌自选盒</option>
+        </select>
+        <input type="number" id="end_item" name="end_item" value="9005"><br><br>
+
+        <label for="num">Num:</label>
+        <input type="number" id="num" name="num" value="1"><br><br>
+
+        <input type="submit" value="Trigger">
+    </form>
+    <div id="response"></div>
+</div>
+</body>
+</html>
