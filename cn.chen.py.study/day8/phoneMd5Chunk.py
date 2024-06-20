@@ -1,26 +1,27 @@
-import pandas as pd
 import hashlib
-from multiprocessing import Pool, cpu_count
 import logging
-import time
 import os
+import time
+from concurrent.futures import ThreadPoolExecutor
+from multiprocessing import Pool, cpu_count
+
+import pandas as pd
 
 # 设置日志配置
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def generate_and_encrypt_phone_numbers(args):
-    phone, isp, temp_dir = args
+    phone, isp = args
     data = []
     for i in range(1, 10000):
         suffix = f"{i:04d}"  # 生成四位数的后缀，例如0001, 0002, ..., 9999
         combined_phone = f"{phone}{suffix}"
         md5_hash = hashlib.md5(combined_phone.encode()).hexdigest()
         data.append([phone, isp, combined_phone, md5_hash])
-    temp_file = os.path.join(temp_dir, f"{phone}_{isp}.csv")
-    pd.DataFrame(data, columns=['phone', 'isp', 'combined_phone', 'md5']).to_csv(temp_file, index=False)
-    return temp_file
+    return pd.DataFrame(data, columns=['phone', 'isp', 'combined_phone', 'md5'])
 
-def process_chunk(chunk, province, isp, temp_dir):
+
+def process_chunk(chunk, province, isp):
     if isp:
         filtered_chunk = chunk[(chunk['province'] == province) & (chunk['isp'] == isp)]
     else:
@@ -31,48 +32,58 @@ def process_chunk(chunk, province, isp, temp_dir):
 
     if filtered_chunk.empty:
         logging.info("No data found for the given province and ISP in this chunk.")
-        return []  # 返回空列表
+        return pd.DataFrame()  # 返回空的DataFrame
 
-    args_list = [(row['phone'], row['isp'], temp_dir) for _, row in filtered_chunk.iterrows()]
+    args_list = [(row['phone'], row['isp']) for _, row in filtered_chunk.iterrows()]
     num_workers = min(cpu_count(), len(args_list))
 
     logging.info(f"Processing {len(args_list)} records with {num_workers} workers.")
 
     with Pool(num_workers) as pool:
-        temp_files = pool.map(generate_and_encrypt_phone_numbers, args_list)
+        results = pool.map(generate_and_encrypt_phone_numbers, args_list)
 
-    return temp_files
+    return pd.concat(results)
 
-def filter_and_encrypt_large_csv(file_path, province, isp, output_file, chunk_size=10000, encoding='utf-8'):
+
+def write_to_excel(df, output_file, sheet_name):
+    with pd.ExcelWriter(output_file, engine='openpyxl', mode='a' if os.path.exists(output_file) else 'w') as writer:
+        df.to_excel(writer, sheet_name=sheet_name, index=False)
+    logging.info(f"Written {len(df)} records to {sheet_name} in {output_file}.")
+
+
+def filter_and_encrypt_large_csv(file_path, province, isp, output_file, chunk_size=10000, sheet_size=500000,
+                                 encoding='utf-8'):
     reader = pd.read_csv(file_path, chunksize=chunk_size, encoding=encoding)
-    temp_dir = "temp_data"
-    os.makedirs(temp_dir, exist_ok=True)
-    temp_files = []
+    chunks = []
+    total_records = 0
+    sheet_index = 1
 
     start_time = time.time()
 
-    for i, chunk in enumerate(reader, 1):
-        logging.info(f"Processing chunk {i}...")
-        chunk_start_time = time.time()
-        processed_files = process_chunk(chunk, province, isp, temp_dir)
-        if processed_files:
-            temp_files.extend(processed_files)
-        logging.info(f"Chunk {i} processed in {time.time() - chunk_start_time:.2f} seconds.")
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        for i, chunk in enumerate(reader, 1):
+            logging.info(f"Processing chunk {i}...")
+            chunk_start_time = time.time()
+            processed_chunk = process_chunk(chunk, province, isp)
+            if not processed_chunk.empty:
+                chunks.append(processed_chunk)
+                total_records += len(processed_chunk)
 
-    if not temp_files:
-        logging.info("No data found for the given province and ISP across all chunks.")
-        return
+                if total_records >= sheet_size:
+                    combined_df = pd.concat(chunks)
+                    chunks = []  # 清空缓存的块
+                    executor.submit(write_to_excel, combined_df, output_file, sheet_name=f'Sheet{sheet_index}')
+                    sheet_index += 1
+                    total_records = 0  # 重置计数器
 
-    result_df = pd.concat([pd.read_csv(f) for f in temp_files])
-    result_df.to_csv(output_file, index=False)
+            logging.info(f"Chunk {i} processed in {time.time() - chunk_start_time:.2f} seconds.")
 
-    # 删除临时文件
-    for temp_file in temp_files:
-        os.remove(temp_file)
+        if chunks:
+            combined_df = pd.concat(chunks)
+            executor.submit(write_to_excel, combined_df, output_file, sheet_name=f'Sheet{sheet_index}')
 
     logging.info(f"All chunks processed in {time.time() - start_time:.2f} seconds.")
     logging.info(f"Filtered data saved to {output_file}")
-
 
 
 if __name__ == '__main__':
